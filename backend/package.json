@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "An intelligent web-based system for a rescue center using traffic accident data",
   "main": "index.js",
-  
   "scripts": {
-    "start": "node ./index.js",
+    "start": "concurrently \"npm run watch\" \"cd ../frontend && npm start\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "nodemon index.js"
   },
@@ -20,6 +19,7 @@
   },
   "homepage": "https://github.com/DanielCok17/Diploma-thesis#readme",
   "dependencies": {
+    "concurrently": "^7.6.0",
     "express": "^4.18.2",
     "npm-watch": "^0.11.0"
   }
