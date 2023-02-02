@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "An intelligent web-based system for a rescue center using traffic accident data",
   "main": "index.js",
+  
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +20,7 @@
   },
   "homepage": "https://github.com/DanielCok17/Diploma-thesis#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "npm-watch": "^0.11.0"
   }
 }
