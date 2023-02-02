@@ -2,13 +2,13 @@
 An intelligent web-based system for a rescue center using traffic accident data
 
 
-## Klonovanie repozitára
+## Repository clone
 
 ```shell
 git clone https://github.com/DanielCok17/Diploma-thesis.git
 ```
 
-## Spustenie aplikacie
+## App start
 
 ```shell
 cd ./backend
