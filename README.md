@@ -13,8 +13,7 @@ git clone https://github.com/DanielCok17/Diploma-thesis.git
 ```shell
 cd ./backend
 npm i
-cd ..
-cd ./frontend
+cd ../frontend
 npm i
 ```
 
