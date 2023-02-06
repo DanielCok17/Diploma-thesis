@@ -11,10 +11,7 @@ git clone https://github.com/DanielCok17/Diploma-thesis.git
 ## App start
 
 ```shell
-cd ./backend
-npm i
-cd ../frontend
-npm i
+./start-local.sh
 ```
 
 
