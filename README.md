@@ -8,7 +8,7 @@ An intelligent web-based system for a rescue center using traffic accident data
 git clone https://github.com/DanielCok17/Diploma-thesis.git
 ```
 
-## App start
+## Run app localally
 
 ```shell
 ./start-local.sh
