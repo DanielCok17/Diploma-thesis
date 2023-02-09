@@ -1,0 +1,10 @@
+version: "3"
+services:
+  frontend-container:
+    build: .
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./src:/app/src
+    stdin_open: true
+    tty: true

@@ -1,0 +1,9 @@
+version: "3"
+services:
+  frontend-container:
+    build: 
+      context: .
+      args:
+        NODE_ENV: production
+    environment:
+      - NODE_ENV=production

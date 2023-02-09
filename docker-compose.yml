@@ -1,0 +1,19 @@
+version: "3"
+services:
+  backend-container:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/backend
+      - /backend/node_moduls
+  frontend-container:
+    build: ./frontend
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./frontend/src:/app/src
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend-container
