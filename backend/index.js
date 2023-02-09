@@ -1,10 +1,13 @@
- const express = require('express')
- const app = express()
+require('dotenv').config(); 
+const express = require('express')
+const app = express()
 
- app.get('/test',(req,res) => {
-    res.send('Test endpoint')
- })
+const port = process.env.PORT  || 8080
 
- app.listen( process.env.PORT  || 8080, () => {
-    console.log('Server started! \n Listening on port ' + process.env.PORT  || 8080)
- }) 
+app.get('/test',(req,res) => {
+   res.send('Test endpoint')
+})
+
+app.listen(port, () => {
+   console.log('Server started! \n Listening on port ' + port)
+}) 
