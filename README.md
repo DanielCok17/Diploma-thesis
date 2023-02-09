@@ -13,9 +13,3 @@ git clone https://github.com/DanielCok17/Diploma-thesis.git
 ```shell
 ./start-local.sh
 ```
-
-
-
-
-
-

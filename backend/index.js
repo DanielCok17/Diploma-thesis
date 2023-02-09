@@ -6,5 +6,5 @@
  })
 
  app.listen( process.env.PORT  || 8080, () => {
-    console.log('Server started')
+    console.log('Server started! \n Listening on port ' + process.env.PORT  || 8080)
  }) 

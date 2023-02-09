@@ -4,23 +4,23 @@
   "description": "An intelligent web-based system for a rescue center using traffic accident data",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run watch\" \"cd ../frontend && npm start\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
     "watch": "nodemon index.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DanielCok17/Diploma-thesis.git"
   },
-  "author": "",
+  "author": "Bc. Daniel Cok",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/DanielCok17/Diploma-thesis/issues"
   },
   "homepage": "https://github.com/DanielCok17/Diploma-thesis#readme",
   "dependencies": {
-    "concurrently": "^7.6.0",
-    "express": "^4.18.2",
-    "npm-watch": "^0.11.0"
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
