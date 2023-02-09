@@ -9,6 +9,6 @@ RUN if [ "$NODE_ENV" = "development" ]; \
         fi
 
 COPY . ./
-ENV PORT 8080
+ENV PORT 8000
 EXPOSE $PORT 
 CMD ["node","index.js"]
