@@ -1,38 +1,62 @@
 pipeline {
-    agent { 
-        node {
-            label 'docker-agent-alpine'
-            }
+  agent any
+  
+  triggers {
+    pollSCM '* * * * *'
+  }     
+  
+  tools {nodejs "NodeJS"}
+    
+  stages {
+        
+    stage('Git') {
+      steps {
+        git 'https://github.com/DanielCok17/Diploma-thesis'
+        echo "Repository cloned successfully!"
       }
-    triggers {
-        pollSCM '* * * * *'
     }
-    stages {
-        stage('Build') {
-            steps {
-                echo "Building.."
-                sh '''
-                cd backend
-                npm install
-                '''
-            }
-        }
-        stage('Test') {
-            steps {
-                echo "Testing.."
-                sh '''
-                cd backend
-                node index.js
-                '''
-            }
-        }
-        stage('Deliver') {
-            steps {
-                echo 'Deliver....'
-                sh '''
-                echo "doing delivery stuff.."
-                '''
-            }
-        }
+     
+    stage('Backend build') {
+      steps {
+        sh '''
+            cd backend
+            npm install
+        '''
+        echo "NodeModules instlled successfully in backend!"
+      }
+    }  
+    
+            
+    stage('Frontend build') {
+      steps {
+         sh '''
+            cd frontend
+            npm install
+        '''
+        echo "NodeModules instlled successfully in frontend!"
+      }
     }
+    
+    stage('Frontend Test') {
+      steps {
+         sh '''
+            cd frontend
+            npm run build
+        '''
+        echo "Fronted build successfully done!"
+      }
+    }
+  }
+  
+  post {
+    success {
+        echo "Processing succeeded"
+    }
+    failure {
+        echo "Processing failed"
+    }
+    always {
+        echo "We are done..."
+    }
+  }
 }
