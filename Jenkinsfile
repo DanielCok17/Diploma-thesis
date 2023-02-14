@@ -12,7 +12,8 @@ pipeline {
             steps {
                 echo "Building.."
                 sh '''
-                echo "doing build stuff.."
+                cd backend
+                npm install
                 '''
             }
         }
@@ -20,7 +21,8 @@ pipeline {
             steps {
                 echo "Testing.."
                 sh '''
-                echo "doing test stuff.."
+                cd backend
+                node index.js
                 '''
             }
         }
