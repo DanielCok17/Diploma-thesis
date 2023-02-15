@@ -9,7 +9,7 @@ pipeline {
     pollSCM '* * * * *'
   }     
   
-//   tools {nodejs "NodeJS"}
+  tools {nodejs "NodeJS"}
     
   stages {
         
@@ -23,7 +23,9 @@ pipeline {
     stage('Backend build') {
       steps {
         sh '''
+            pwd
             cd backend
+            pwd
             npm install
         '''
         echo "NodeModules instlled successfully in backend!"
