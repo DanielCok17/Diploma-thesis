@@ -9,7 +9,7 @@ pipeline {
     pollSCM '* * * * *'
   }     
   
-  tools {nodejs "NodeJS"}
+//   tools {nodejs "NodeJS"}
     
   stages {
         
