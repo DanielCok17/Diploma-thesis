@@ -1,3 +1,18 @@
+<h1 align="center">
+🌐 MERN Stack
+</h1>
+
+<p align="center">
+  <img src="https://miro.medium.com/v2/format:webp/0*hU4zJiyVwWcM0L-w.png" width="100%" height="200" />
+</p>
+
+<br>
+
+> This app si a MERN fullstack implementation in MongoDB, Expressjs, React/Redux, Nodejs. 
+
+> MERN stack is the idea of using Javascript/Node for fullstack web development.
+
+
 # Diploma-thesis
 An intelligent web-based system for a rescue center using traffic accident data
 
