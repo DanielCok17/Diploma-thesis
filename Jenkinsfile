@@ -16,7 +16,6 @@ pipeline {
     stage('Git') {
       steps {
         git 'https://github.com/DanielCok17/Diploma-thesis'
-        echo "Repository cloned successfully!"
       }
     }
      
@@ -28,7 +27,7 @@ pipeline {
             pwd
             npm install
         '''
-        echo "NodeModules instlled successfully in backend!"
+        echo "Node_modules instlled successfully in backend!"
       }
     }  
     
@@ -39,7 +38,7 @@ pipeline {
             cd frontend
             npm install
         '''
-        echo "NodeModules instlled successfully in frontend!"
+        echo "Node_modules instlled successfully in frontend!"
       }
     }
     
