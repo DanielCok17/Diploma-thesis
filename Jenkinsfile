@@ -36,7 +36,7 @@ pipeline {
       steps {
          sh '''
             cd frontend
-            npm install
+            pnpm install
         '''
         echo "Node_modules instlled successfully in frontend!"
       }
@@ -46,7 +46,7 @@ pipeline {
       steps {
          sh '''
             cd frontend
-            npm run build
+            pnpm run build
         '''
         echo "Fronted build successfully done!"
       }
