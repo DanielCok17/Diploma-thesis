@@ -8,8 +8,11 @@ COPY package.json .
 #         else npm install --only=production; \
 #         fi
 
-RUN npm install
+RUN npm install -g pnpm
+RUN rm -fr node_moduls
+RUN rm -rf package-lock.json
+RUN pnpm install
 COPY . ./
 ENV PORT 3001
 EXPOSE $PORT 
-CMD ["npm","start"]
+CMD ["pnpm","start"]
