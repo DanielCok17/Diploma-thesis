@@ -5,9 +5,9 @@ pipeline {
     NODE_ENV = "production"
   }
   
-  triggers {
-    pollSCM '* * * * *'
-  }     
+  // triggers {
+  //   pollSCM '* * * * *'
+  // }     
   
   tools {nodejs "NodeJS"}
     
@@ -47,8 +47,8 @@ pipeline {
     stage('Frontend Test') {
       steps {
          sh '''
-            pwd
             cd frontend
+            cat package.json
             pnpm run build
         '''
         echo "Fronted build successfully done!"
