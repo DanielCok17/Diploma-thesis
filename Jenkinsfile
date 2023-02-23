@@ -5,9 +5,9 @@ pipeline {
     NODE_ENV = "production"
   }
   
-  triggers {
-    pollSCM '* * * * *'
-  }     
+//  triggers {
+//    pollSCM '* * * * *'
+//  }     
   
   tools {nodejs "NodeJS"}
     
