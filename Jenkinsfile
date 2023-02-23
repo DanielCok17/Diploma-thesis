@@ -49,6 +49,10 @@ pipeline {
          sh '''
             cd frontend
             cat package.json
+            rm -fr node_moduls
+            rm -rf package-lock.json
+            pnpm install
+            cat package.json
             pnpm run build
         '''
         echo "Fronted build successfully done!"
