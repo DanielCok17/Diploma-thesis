@@ -5,9 +5,9 @@ pipeline {
     NODE_ENV = "production"
   }
   
-//  triggers {
-//    pollSCM '* * * * *'
-//  }     
+  triggers {
+    pollSCM '* * * * *'
+  }     
   
   tools {nodejs "NodeJS"}
     
@@ -30,7 +30,6 @@ pipeline {
         echo "Node_modules instlled successfully in backend!"
       }
     }  
-    
             
     stage('Frontend build') {
       steps {
@@ -48,6 +47,7 @@ pipeline {
     stage('Frontend Test') {
       steps {
          sh '''
+            pwd
             cd frontend
             pnpm run build
         '''
