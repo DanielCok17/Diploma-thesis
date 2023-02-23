@@ -36,6 +36,9 @@ pipeline {
       steps {
          sh '''
             cd frontend
+            npm install -g pnpm
+            rm -fr node_moduls
+            rm -rf package-lock.json
             pnpm install
         '''
         echo "Node_modules instlled successfully in frontend!"
