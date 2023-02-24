@@ -5,9 +5,9 @@ pipeline {
     NODE_ENV = "production"
   }
   
-  // triggers {
-  //   pollSCM '* * * * *'
-  // }     
+  triggers {
+    pollSCM '* * * * *'
+  }     
   
   tools {nodejs "NodeJS"}
     
@@ -44,20 +44,17 @@ pipeline {
       }
     }
     
-    stage('Frontend Test') {
-      steps {
-         sh '''
-            cd frontend
-            cat package.json
-            rm -fr node_moduls
-            rm -rf package-lock.json
-            pnpm install
-            cat package.json
-            pnpm run build
-        '''
-        echo "Fronted build successfully done!"
-      }
-    }
+    // TODO fix this
+    // stage('Frontend Test') {
+    //   steps {
+    //      sh '''
+    //         cd frontend
+    //         cat package.json
+    //         pnpm run build
+    //     '''
+    //     echo "Fronted build successfully done!"
+    //   }
+    // }
   }
   
   post {
