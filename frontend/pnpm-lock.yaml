@@ -13,6 +13,7 @@ specifiers:
   '@types/react': ^18.0.28
   '@types/react-dom': ^18.0.11
   '@types/testing-library__jest-dom': ^5.14.5
+  eslint: ^8.34.0
   react: ^18.2.0
   react-dom: ^18.2.0
   react-scripts: 5.0.1
@@ -31,6 +32,7 @@ dependencies:
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
   '@types/testing-library__jest-dom': 5.14.5
+  eslint: 8.34.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-scripts: 5.0.1_edde3jg72qecvyttdq7wbgx54a

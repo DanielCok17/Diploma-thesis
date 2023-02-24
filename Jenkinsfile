@@ -45,16 +45,16 @@ pipeline {
     }
     
     // TODO fix this
-    // stage('Frontend Test') {
-    //   steps {
-    //      sh '''
-    //         cd frontend
-    //         cat package.json
-    //         pnpm run build
-    //     '''
-    //     echo "Fronted build successfully done!"
-    //   }
-    // }
+    stage('Frontend Test') {
+      steps {
+         sh '''
+            cd frontend
+            cat package.json
+            pnpm run build
+        '''
+        echo "Fronted build successfully done!"
+      }
+    }
   }
   
   post {
