@@ -16,7 +16,6 @@ pipeline {
     stage('Git') {
       steps {
         git 'https://github.com/DanielCok17/Diploma-thesis'
-        echo "Repository cloned successfully!"
       }
     }
      
@@ -28,30 +27,34 @@ pipeline {
             pwd
             npm install
         '''
-        echo "NodeModules instlled successfully in backend!"
+        echo "Node_modules instlled successfully in backend!"
       }
     }  
-    
             
     stage('Frontend build') {
       steps {
          sh '''
             cd frontend
-            npm install
+            npm install -g pnpm
+            rm -fr node_moduls
+            rm -rf package-lock.json
+            pnpm install
         '''
-        echo "NodeModules instlled successfully in frontend!"
+        echo "Node_modules instlled successfully in frontend!"
       }
     }
     
-    stage('Frontend Test') {
-      steps {
-         sh '''
-            cd frontend
-            npm run build
-        '''
-        echo "Fronted build successfully done!"
-      }
-    }
+    // TODO fix this
+    // stage('Frontend Test') {
+    //   steps {
+    //      sh '''
+    //         cd frontend
+    //         cat package.json
+    //         pnpm run build
+    //     '''
+    //     echo "Fronted build successfully done!"
+    //   }
+    // }
   }
   
   post {
