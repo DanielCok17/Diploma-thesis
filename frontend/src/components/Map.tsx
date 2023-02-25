@@ -13,7 +13,7 @@ const Map = () => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey,
   });
-  const center = useMemo(() => ({ lat: latitute || env_lat, lng: longitude || env_lng }), []);
+  const center = useMemo(() => ({ lat: env_lat || latitute, lng: env_lng || longitude}), []);
 
   // Get the user's current location
   useEffect(() => {
