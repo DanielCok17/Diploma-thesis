@@ -5,9 +5,9 @@ pipeline {
     NODE_ENV = "production"
   }
   
-  triggers {
-    pollSCM '* * * * *'
-  }     
+  // triggers {
+  //   pollSCM '* * * * *'
+  // }     
   
   tools {nodejs "NodeJS"}
     
@@ -44,7 +44,6 @@ pipeline {
       }
     }
     
-    // TODO fix this
     stage('Frontend Test') {
       steps {
          sh '''
