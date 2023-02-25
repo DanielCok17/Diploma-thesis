@@ -6,6 +6,7 @@
     "@babel/core": "^7.0.0-0",
     "@babel/plugin-syntax-flow": "^7.18.6",
     "@babel/plugin-transform-react-jsx": "^7.21.0",
+    "@react-google-maps/api": "^2.18.1",
     "@testing-library/dom": "^9.0.0",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^13.5.0",
@@ -14,11 +15,13 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/testing-library__jest-dom": "^5.14.5",
+    "api": "link:@types/google-map-react/api",
     "eslint": "^8.34.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
+    "walletconnect": "^1.7.8",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
