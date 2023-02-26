@@ -22,6 +22,7 @@ specifiers:
   eslint: ^8.34.0
   react: ^18.2.0
   react-dom: ^18.2.0
+  react-icons: ^4.7.1
   react-router-dom: ^5.2.0
   react-scripts: 5.0.1
   styled-components: ^5.3.6
@@ -46,6 +47,7 @@ dependencies:
   eslint: 8.34.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-icons: 4.7.1_react@18.2.0
   react-scripts: 5.0.1_edde3jg72qecvyttdq7wbgx54a
   styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
   typescript: 4.9.5
@@ -9489,7 +9491,6 @@ packages:
       react: '*'
     dependencies:
       react: 18.2.0
-    dev: true
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
