@@ -1,5 +1,9 @@
 import { FC } from 'react';
 
+export const Home: FC = () => {
+    return <div className="overview">Home</div>;
+};
+
 export const Overview: FC = () => {
     return <div className="overview">Overview</div>;
 };

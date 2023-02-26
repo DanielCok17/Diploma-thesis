@@ -4,12 +4,18 @@ import {
     AiOutlineHistory,
     AiOutlineHome,
     AiOutlineMoneyCollect,
-    AiOutlineUser
+    AiOutlineUser,
+    AiFillHome
 } from 'react-icons/ai';
 import { FaCog, FaOpencart } from 'react-icons/fa';
 import { SidebarItem } from '../models/SidebarItem';
 
 export const SidebarData: SidebarItem[] = [
+    {
+        title: 'Home',
+        path: '/',
+        icon: <AiFillHome />
+    },
     {
         title: 'Overview',
         path: '/overview',
