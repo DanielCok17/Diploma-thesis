@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { GoogleMap, LoadScript, TrafficLayer, Marker, InfoWindow } from "@react-google-maps/api";
 
+const api_key: string = process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string;
+
 const GoogleMaps: React.FC = () => {
   const [center, setCenter] = useState({ lat: 51.505, lng: -0.09 });
   const [markerPosition, setMarkerPosition] = useState(center);
 
   useEffect(() => {
-    // Check if geolocation is supported
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -23,36 +24,54 @@ const GoogleMaps: React.FC = () => {
     }
   }, []);
 
+  // Define container styles for responsiveness
   const containerStyle = {
-    width: "600px",
-    height: "600px",
-    margin: "auto", // This will help in centering the map container
+    width: "100%",   // take full width
+    height: "80vh",  // take 80% of viewport height
+    margin: "auto",
   };
 
+  // Adjust map style based on screen size
+  const mapContainerStyle = window.innerWidth <= 768 ? 
+    { width: "100%", height: "60vh" } : containerStyle;
+
+  const isGoogleMapScriptLoaded = window.google && window.google.maps;
+
   return (
-    <LoadScript googleMapsApiKey="AIzaSyCmEuEWkQz9MtVuOewJAYOu7FhYVZWGgi4">
-      <div style={containerStyle}>
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={10}
-          // size 300 and 300
-        >
-          {/* <TrafficLayer autoUpdate /> */}
-          <TrafficLayer  />
-          <Marker position={markerPosition} icon={{url: "https://img.icons8.com/color/48/000000/car--v1.png"}}>
-            <InfoWindow position={markerPosition}>
-              <div>
-                Accident at XYZ Road
-                <br />3 Vehicles Involved
-              </div>
-            </InfoWindow>
-          </Marker>
-        </GoogleMap>
-      </div>
-    </LoadScript>
+    <>
+      {isGoogleMapScriptLoaded ? (
+        <div style={containerStyle}>
+          <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={10}>
+            <TrafficLayer />
+            <Marker position={markerPosition} icon={{ url: "https://img.icons8.com/color/48/000000/car--v1.png" }}>
+              <InfoWindow position={markerPosition}>
+                <div>
+                  Accident at XYZ Road
+                  <br />3 Vehicles Involved
+                </div>
+              </InfoWindow>
+            </Marker>
+          </GoogleMap>
+        </div>
+      ) : (
+        <LoadScript googleMapsApiKey={api_key}>
+          <div style={containerStyle}>
+            <GoogleMap mapContainerStyle={mapContainerStyle} center={center} zoom={10}>
+              <TrafficLayer />
+              <Marker position={markerPosition} icon={{ url: "https://img.icons8.com/color/48/000000/car--v1.png" }}>
+                <InfoWindow position={markerPosition}>
+                  <div>
+                    Accident at XYZ Road
+                    <br />3 Vehicles Involved
+                  </div>
+                </InfoWindow>
+              </Marker>
+            </GoogleMap>
+          </div>
+        </LoadScript>
+      )}
+    </>
   );
 };
 
 export default GoogleMaps;
-
