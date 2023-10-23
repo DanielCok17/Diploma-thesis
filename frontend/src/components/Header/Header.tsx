@@ -32,6 +32,8 @@ const Header: React.FC = () => {
         return 7 ;
       case '/data':
         return 8 ;
+      case '/passenger-info':
+        return 9 ;
       default:
         return 0;
     }
@@ -66,6 +68,9 @@ const Header: React.FC = () => {
       case 8:
         navigate('/data');
         break;
+      case 9:
+        navigate('/passenger-info');
+        break;
       default:
         break;
     }
@@ -99,6 +104,7 @@ const Header: React.FC = () => {
             <Tab label="Dashboard" />
             <Tab label="Analysis" />
             <Tab label="Data" />
+            <Tab label="Passenger Info" />
           </Tabs>
         )}
       </Toolbar>

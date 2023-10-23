@@ -8,6 +8,7 @@ import PublicReports from "./components/PublicReports/PublicReports";
 import SeverityEstimation from "./components/SeverityEstimation/SeverityEstimation";
 import DispatchRecommendation from "./components/DispatchRecommendation/DispatchRecommendation";
 import OtherCarsInfo from "./components/OtherCarsInfo/OtherCarsInfo";
+import PassengerInfo from "./components/Passengers/PassengerInfo";
 import "./App.css";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/severity-estimation" element={<SeverityEstimation />} />
         <Route path="/dispatch-recommendation" element={<DispatchRecommendation />} />
         <Route path="/other-cars-info" element={<OtherCarsInfo />} />
+        <Route path="/passenger-info" element={<PassengerInfo />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
