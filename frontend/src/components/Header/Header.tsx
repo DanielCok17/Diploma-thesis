@@ -28,12 +28,12 @@ const Header: React.FC = () => {
         return 5;
       case '/dashboard':
         return 6 ;
-      case '/analysis':
-        return 7 ;
-      case '/data':
-        return 8 ;
+      // case '/analysis':
+      //   return 7 ;
+      // case '/data':
+      //   return 8 ;
       case '/passenger-info':
-        return 9 ;
+        return 7 ;
       default:
         return 0;
     }
@@ -62,13 +62,13 @@ const Header: React.FC = () => {
       case 6:
         navigate('/dashboard');
         break;
+      // case 7:
+      //   navigate('/analysis');
+      //   break;
+      // case 8:
+      //   navigate('/data');
+        // break;
       case 7:
-        navigate('/analysis');
-        break;
-      case 8:
-        navigate('/data');
-        break;
-      case 9:
         navigate('/passenger-info');
         break;
       default:
@@ -102,8 +102,8 @@ const Header: React.FC = () => {
             <Tab label="Severity Estimation" />
             <Tab label="Dispatch Recommendation" />
             <Tab label="Dashboard" />
-            <Tab label="Analysis" />
-            <Tab label="Data" />
+            {/* <Tab label="Analysis" />
+            <Tab label="Data" /> */}
             <Tab label="Passenger Info" />
           </Tabs>
         )}
