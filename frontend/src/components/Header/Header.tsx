@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography, Tabs, Tab, useMediaQuery, useTheme, Drawer, IconButton, List, ListItem, ListItemText } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './style.css';
 
 const Header: React.FC = () => {
@@ -16,62 +16,71 @@ const Header: React.FC = () => {
     switch (location.pathname) {
       case '/':
         return 0;
+      case '/other-cars-info':
+        return 1 ;
+      case '/vehicle-sensors':
+        return 2 ;
+      case '/public-reports':
+        return 3 ;
+      case '/severity-estimation':
+        return 4 ;
+      case '/dispatch-recommendation':
+        return 5;
       case '/dashboard':
-        return 1;
+        return 6 ;
       case '/analysis':
-        return 2;
+        return 7 ;
       case '/data':
-        return 3;
-      case '/contact':
-        return 4;
+        return 8 ;
       default:
         return 0;
     }
-  };
-
-  const handleTabClick: {
-    (event: React.ChangeEvent<{}>, newValue: number): void;
-    (newValue: number): void;
-} = (eventOrValue: React.ChangeEvent<{}> | number, newValue?: number) => {
-    let value = 0;
-    if (typeof eventOrValue === 'number') {
-        value = eventOrValue;
-    } else if (newValue !== undefined) {
-        value = newValue;
-    }
-
-    switch (value) {
-        case 0:
-            navigate('/');
-            break;
-        case 1:
-            navigate('/dashboard');
-            break;
-        case 2:
-            navigate('/analysis');
-            break;
-        case 3:
-            navigate('/data');
-            break;
-        case 4:
-            navigate('/contact');
-            break;
-        default:
-            break;
-    }
 };
 
+  const handleTabClick = (event: React.ChangeEvent<{}>, newValue: number): void => {
+    switch (newValue ) {
+      case 0:
+        navigate('/');
+        break;
+      case 1:
+        navigate('/other-cars-info');
+        break;
+      case 2:
+        navigate('/vehicle-sensors');
+        break;
+      case 3:
+        navigate('/public-reports');
+        break;
+      case 4:
+        navigate('/severity-estimation');
+        break;
+      case 5:
+        navigate('/dispatch-recommendation');
+        break;
+      case 6:
+        navigate('/dashboard');
+        break;
+      case 7:
+        navigate('/analysis');
+        break;
+      case 8:
+        navigate('/data');
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <AppBar position="sticky" color="default" elevation={0} className="app-bar">
       <Toolbar className="toolbar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-    <Typography variant={isMobile ? 'h6' : 'h4'} noWrap>
-        Smart Rescue System
-    </Typography>
-    {isMobile ? (
-        <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => setDrawerOpen(true)}>
+        <Typography variant={isMobile ? 'h6' : 'h4'} noWrap>
+          Smart Rescue System
+        </Typography>
+        {isMobile ? (
+          <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => setDrawerOpen(true)}>
             <MenuIcon />
-        </IconButton>
+          </IconButton>
         ) : (
           <Tabs 
             value={determineTabValue()}
@@ -81,19 +90,23 @@ const Header: React.FC = () => {
             className="tabs"
             aria-label="header tabs"
           >
-            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}><Tab label="Home" /></Link>
-            <Link to="/dashboard" style={{ textDecoration: 'none', color: 'inherit' }}><Tab label="Dashboard" /></Link>
-            <Link to="/analysis" style={{ textDecoration: 'none', color: 'inherit' }}><Tab label="Analysis" /></Link>
-            <Link to="/data" style={{ textDecoration: 'none', color: 'inherit' }}><Tab label="Data" /></Link>
-            <Link to="/contact" style={{ textDecoration: 'none', color: 'inherit' }}><Tab label="Contact" /></Link>
+            <Tab label="Home" />
+            <Tab label="Other Cars Info" />
+            <Tab label="Vehicle Sensors" />
+            <Tab label="Public Reports" />
+            <Tab label="Severity Estimation" />
+            <Tab label="Dispatch Recommendation" />
+            <Tab label="Dashboard" />
+            <Tab label="Analysis" />
+            <Tab label="Data" />
           </Tabs>
         )}
       </Toolbar>
       <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <List>
-          {['Home', 'Dashboard', 'Analysis', 'Data', 'Contact'].map((text, index) => (
+          {['Home', 'Other Cars Info', 'Vehicle Sensors', 'Public Reports', 'Severity Estimation', 'Dispatch Recommendation', 'Dashboard', 'Analysis', 'Data'].map((text, index) => (
             <ListItem button key={text} onClick={() => {
-              handleTabClick(index);
+              handleTabClick({} as React.ChangeEvent<{}>, index);
               setDrawerOpen(false);
             }}>
               <ListItemText primary={text} />

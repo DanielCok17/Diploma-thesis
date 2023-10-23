@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GoogleMap, LoadScript, TrafficLayer, Marker, InfoWindow } from "@react-google-maps/api";
+import NotificationSystem from "../NotificationSystem/NotificationSystem";
 
 const api_key: string = process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string;
 
@@ -70,6 +71,7 @@ const GoogleMaps: React.FC = () => {
           </div>
         </LoadScript>
       )}
+      <NotificationSystem />
     </>
   );
 };
