@@ -126,25 +126,25 @@ const NotificationSystem: React.FC = () => {
   const initialNotifications: Notification[] = [
     {
       type: "success",
-      message: "Task completed successfully!",
+      message: "Road accident reported!",
       id: 1,
       dismissed: false,
     },
     {
       type: "warning",
-      message: "Low disk space. Please free up some space!",
+      message: "Road accident incoming!",
       id: 2,
       dismissed: false,
     },
     {
       type: "error",
-      message: "Failed to fetch data.",
+      message: "New accident reported!",
       id: 3,
       dismissed: false,
     },
     {
       type: "info",
-      message: "New update available.",
+      message: "Fire cars dispatched!",
       id: 4,
       dismissed: false,
     },
