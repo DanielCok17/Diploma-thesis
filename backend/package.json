@@ -8,6 +8,9 @@
     "watch": "NODE_ENV=dev nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node": "16.13.2"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DanielCok17/Diploma-thesis.git"
