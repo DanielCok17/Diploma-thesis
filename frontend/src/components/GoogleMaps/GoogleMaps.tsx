@@ -15,6 +15,7 @@ const GoogleMaps: React.FC = () => {
           const newPos = { lat: position.coords.latitude, lng: position.coords.longitude };
           setCenter(newPos);
           setMarkerPosition(newPos);
+          console.log(newPos);
         },
         (error) => {
           console.log(error);

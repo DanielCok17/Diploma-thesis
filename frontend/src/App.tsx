@@ -9,6 +9,8 @@ import SeverityEstimation from "./components/SeverityEstimation/SeverityEstimati
 import DispatchRecommendation from "./components/DispatchRecommendation/DispatchRecommendation";
 import OtherCarsInfo from "./components/OtherCarsInfo/OtherCarsInfo";
 import PassengerInfo from "./components/Passengers/PassengerInfo";
+import MyMap from "./components/OpenStreetMap/OpenStreetMap";
+import DataTable from "./components/TestData/TestData";
 import "./App.css";
 
 function App() {
@@ -17,8 +19,9 @@ function App() {
     <Router>
       <Header />
       <Routes>
-      <Route path="/"  element={<GoogleMaps />} />
+      <Route path="/"  element={<MyMap />} />
         <Route path="/"  element={<TrafficMap />} />
+        <Route path="/test-data" element={<DataTable />} />
         <Route path="/vehicle-sensors" element={<VehicleSensors />} />
         <Route path="/public-reports" element={<PublicReports />} />
         <Route path="/severity-estimation" element={<SeverityEstimation />} />
