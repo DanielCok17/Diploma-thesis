@@ -29,9 +29,14 @@ type AccidentData = {
 };
 
 const DataTable = () => {
-    const url =
+    let url =
     process.env.REACT_APP_ENVIRONMENT === "production" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
     console.log(url);
+
+    // if url is undefined than
+    if (url === undefined || url === null || url === "" ) {
+        url = 'https://diploma-thesis-backend.onrender.com'
+    }
 
     const [data, setData] = React.useState<AccidentData[]>([]);
 
