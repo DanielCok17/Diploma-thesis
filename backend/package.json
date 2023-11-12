@@ -4,8 +4,8 @@
   "description": "An intelligent web-based system for a rescue center using traffic accident data",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "watch": "nodemon index.js",
+    "start": "NODE_ENV=prod node index.js",
+    "watch": "NODE_ENV=dev nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,8 +19,12 @@
   },
   "homepage": "https://github.com/DanielCok17/Diploma-thesis#readme",
   "dependencies": {
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2"
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "helmet": "^7.1.0",
+    "mongodb": "^6.2.0",
+    "mongoose": "^8.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
