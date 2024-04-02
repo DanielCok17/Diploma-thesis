@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 
 const violationSchema = new mongoose.Schema({
     type: { type: String, required: true },
-    coordinates: { type: String, required: true },
+    coordinates: {
+        'langitude' : { type: Number, required: true },
+        'latitude' : { type: Number, required: true }
+    },
     timestamp: { type: String, required: true }
 });
 
