@@ -12,16 +12,25 @@ import {
   List,
   ListItem,
   ListItemText,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./style.css";
+import { useAuth } from '../Login/AuthContext'; // Adjust the import path as necessary
 
 const Header: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const navigate = useNavigate();
   const location = useLocation();
+  const auth = useAuth(); // Use the auth context
+
+  const handleLogout = () => {
+    auth.logout(); // Assuming your auth context has a logout method
+    navigate('/login'); // Adjust the route as necessary
+  };
+
 
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
@@ -57,7 +66,7 @@ const Header: React.FC = () => {
   const handleTabClick = (event: React.ChangeEvent<{}>, newValue: number): void => {
     switch (newValue) {
       case 0:
-        navigate("/");
+        navigate("/admin");
         break;
       case 1:
         navigate("/other-cars-info");
@@ -103,6 +112,7 @@ const Header: React.FC = () => {
         {isMobile ? (
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => setDrawerOpen(true)}>
             <MenuIcon />
+            <Button color="inherit" onClick={handleLogout}>Logout</Button> {/* Place logout button inside Drawer for mobile */}
           </IconButton>
         ) : (
           <Tabs
@@ -124,7 +134,10 @@ const Header: React.FC = () => {
             {/* <Tab label="Analysis" />
             <Tab label="Data" /> */}
             <Tab label="Passenger Info" />
+            <Button color="inherit" onClick={handleLogout}>Logout</Button> {/* Place logout button inside Drawer for mobile */}
+
           </Tabs>
+          
         )}
       </Toolbar>
       <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
