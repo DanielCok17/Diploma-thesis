@@ -11,8 +11,8 @@ const Login: React.FC = () => {
   const auth = useAuth(); // Use the hook to get auth context
 
   const handleLogin = () => {
-    const isDispatcher = username === 'admin' && password === 'admin';
-    const isRescuer = username === 'user' && password === 'user';
+    const isDispatcher = username === 'admin' && password === 'adminn';
+    const isRescuer = username === 'user' && password === 'userr';
   
     if (isDispatcher) {
       auth.login('dispatcher'); // Pass 'dispatcher' as the role argument
