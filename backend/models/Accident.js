@@ -1,31 +1,26 @@
 const mongoose = require('mongoose');
 
-const violationSchema = new mongoose.Schema({
+const accidentSchema = new mongoose.Schema({
+  timestamp: { type: Date, required: true },
+  vin: { type: String, required: true },
+  last_timestamp_check: { type: Date, required: true },
+  acceleration: { type: Number, required: true },
+  speed: { type: Number, required: true },
+  license_plates: [{ type: String, required: true }],
+  coordinates: { type: [Number], required: true }, // [latitude, longitude]
+  violations: [{
     type: { type: String, required: true },
-    coordinates: {
-        'langitude' : { type: Number, required: true },
-        'latitude' : { type: Number, required: true }
-    },
-    timestamp: { type: String, required: true }
-});
-
-const driverSchema = new mongoose.Schema({
+    coordinates: { type: [Number], required: true }, // [latitude, longitude]
+    timestamp: { type: Date, required: true }
+  }],
+  driver: {
     seatbelt: { type: Boolean, required: true },
     drowsiness: { type: Boolean, required: true },
-    heart_rate: { type: Number, required: true }
+    heart_rate: [Number] // Array of heart rate readings
+  },
+  passengers_num: { type: Number, required: true }
 });
 
-const accidentDataSchema = new mongoose.Schema({
-    timestamp: { type: String, required: true },
-    acceleration: { type: Number, required: true },
-    speed: { type: Number, required: true },
-    license_plates: [{ type: String, required: true }],
-    coordinates: { type: String, required: true },
-    violations: [violationSchema],
-    driver: driverSchema,
-    passengers_num: { type: Number, required: true }
-});
+const AccidentReport = mongoose.model('AccidentReport', accidentSchema);
 
-const AccidentData = mongoose.model('AccidentData', accidentDataSchema);
-
-module.exports = AccidentData;
+module.exports = AccidentReport;

@@ -1,63 +1,79 @@
 const express = require('express');
 const router = express.Router();
-const AccidentModel = require('../models/Accident');
+const AccidentReport = require('../models/Accident'); // Nastavte správnu cestu k súboru modelu
 
-router.post('/accident-data', async (req, res) => {
+router.post('/', async (req, res) => {
+    const {
+        timestamp,
+        vin,
+        last_timestamp_check,
+        acceleration,
+        speed,
+        license_plates,
+        coordinates,
+        violations,
+        driver,
+        passengers_num
+    } = req.body;
+
+    // Kontrola povinných polí
+    if (!timestamp || !vin || !last_timestamp_check || !acceleration || !speed ||
+        !license_plates || !coordinates || !driver || passengers_num === undefined) {
+        return res.status(400).send('Missing required fields');
+    }
+
     try {
-        const newAccidentData = new AccidentModel(req.body);
-        await newAccidentData.save();
-        res.status(201).send(newAccidentData);
+        const newAccidentReport = new AccidentReport({
+            timestamp,
+            vin,
+            last_timestamp_check,
+            acceleration,
+            speed,
+            license_plates,
+            coordinates,
+            violations,
+            driver,
+            passengers_num
+        });
+        await newAccidentReport.save();
+        res.status(200).json(newAccidentReport);
     } catch (error) {
-        res.status(400).send(error);
+        res.status(500).send(error.message);
     }
 });
 
-router.get('/accident-data', async (req, res) => {
-    try {
-        const accidentData = await AccidentModel.find();
-        res.status(200).send(accidentData);
-    } catch (error) {
-        res.status(500).send(error);
-    }
-});
+// Získanie všetkých nehôd
 
-router.get('/accident-data/:id', async (req, res) => {
+router.get('/allAccidents', async (req, res) => {
     try {
-        const accidentData = await AccidentModel.findById(req.params.id);
-        if (!accidentData) {
-            return res.status(404).send();
+        const accidents = await AccidentReport.find();
+        res.status(200).json(accidents);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+);
+
+// Získanie nehody podľa VIN
+
+router.get('/:vin', async (req, res) => {
+    const { vin } = req.params;
+    if (!vin) {
+        return res.status(400).send('VIN is required');
+    }
+
+    try {
+        const accident = await AccidentReport.findOne({ vin: vin });
+        if (accident) {
+            res.status(200).json(accident);
+        } else {
+            res.status(404).send('No accident found for the provided VIN');
         }
-        res.send(accidentData);
     } catch (error) {
-        res.status(500).send(error);
+        res.status(500).send(error.message);
     }
-});
-
-router.put('/accident-data/:id', async (req, res) => {
-    try {
-        const accidentData = await AccidentModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-        if (!accidentData) {
-            return res.status(404).send();
-        }
-        res.send(accidentData);
-    } catch (error) {
-        res.status(400).send(error);
-    }
-});
-
-router.delete('/accident-data/:id', async (req, res) => {
-    try {
-        const accidentData = await AccidentModel.findByIdAndDelete(req.params.id);
-        if (!accidentData) {
-            return res.status(404).send();
-        }
-        res.send(accidentData);
-    } catch (error) {
-        res.status(500).send(error);
-    }
-});
+}
+);
 
 module.exports = router;
-
-
 
