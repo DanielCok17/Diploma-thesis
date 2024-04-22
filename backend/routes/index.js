@@ -1,16 +1,18 @@
 const express = require('express');
+const expressOasGenerator = require('express-oas-generator');
 const helmet = require('helmet');
 const router = express.Router();
 
-const testRoutes = require('./test');
 const AccidentRoutes = require('./accident');
 const contactsRoutes = require('./contacts');
 const VehicleStateRoutes = require('./vehicleState');
 const pressonalDetailsRoutes = require('./personalDetails');
 
+// Inicializácia express-oas-generator pred pridaním akéhokoľvek middleware a routes
+expressOasGenerator.init(router, {});
+
 router.use(helmet());
 
-router.use('/test', testRoutes);
 router.use('/accident', AccidentRoutes);
 router.use('/emergency-contacts', contactsRoutes);
 router.use('/vehicle-state', VehicleStateRoutes);
