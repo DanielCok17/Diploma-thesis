@@ -8,7 +8,6 @@ const contactsRoutes = require('./contacts');
 const VehicleStateRoutes = require('./vehicleState');
 const pressonalDetailsRoutes = require('./personalDetails');
 
-// Inicializácia express-oas-generator pred pridaním akéhokoľvek middleware a routes
 expressOasGenerator.init(router, {});
 
 router.use(helmet());
