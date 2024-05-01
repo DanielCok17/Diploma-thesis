@@ -1,0 +1,65 @@
+/* AccidentSimulation.css */
+.wheel {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  position: relative;
+  transition: transform 0.5s ease-in-out;
+}
+
+.pedal {
+  width: 20px;
+  height: 80px;
+  background-color: gray;
+  position: absolute;
+  bottom: 10px;
+}
+
+.gas-pedal {
+  left: 30px;
+}
+
+.brake-pedal {
+  right: 30px;
+}
+
+.seat {
+  width: 80px;
+  height: 80px;
+  background-color: #bdbdbd; /* Adjust the color as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+}
+
+.eye-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid #e0e0e0;
+}
+
+.eye-indicator.open {
+  background-color: green;
+}
+
+.eye-indicator.closed {
+  background-color: red;
+}
+
+.speedometer {
+  font-size: 1.5em;
+  margin-top: 1em;
+}
+
+.seatbelt-indicator {
+  color: #f44336; /* Adjust the color as needed */
+  font-size: 1.5em;
+  margin-top: 1em;
+}

@@ -8,7 +8,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PeopleIcon from "@mui/icons-material/People";
 import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-// import { styled, keyframes } from '@mui/system';
+import './AccidentList.css';
 
 interface Accident {
   _id: string;
@@ -38,17 +38,6 @@ interface Props {
 
 const AccidentList: React.FC<Props> = ({ accidents }) => {
   const navigate = useNavigate(); // Inicializujeme hook useNavigate
-  const blinkKeyframes = `
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
-`;
-
-const BlinkingStatus = ({ className, color }: { className?: string; color?: string }) => (
-  <FiberManualRecordIcon className={`${className} blink`} style={{ color: color }} />
-);
-
-
 
   return (
     // nazov Zoznam aktualnych nehod
@@ -64,13 +53,14 @@ const BlinkingStatus = ({ className, color }: { className?: string; color?: stri
                 <DirectionsCarIcon />
               </ListItemIcon>
               <ListItemText
-primary={
-    <>
-      <BlinkingStatus color="error" /> {/* Červená blikajúca gulička */}
-      {` Accident #${index + 1}`}
-    </>
-}
-    secondary={
+                // primary={`Accident #${index + 1}`}
+                primary={
+                  <>
+                    <FiberManualRecordIcon className="blinking-icon" color="error" />
+                    {` Accident #${index + 1}`}
+                  </>
+                }
+                secondary={
                   <>
                     <Typography component="span" variant="body2" color="text.primary">
                       VIN: {accident.vin} - Speed: {accident.speed} km/h
@@ -95,7 +85,7 @@ primary={
                 color="primary"
                 onClick={() => {
                   console.log(`Clicked on accident #${index + 1}`);
-                  navigate(`/accident-details/${accident._id}`); // Zakomentované pre ukážku
+                  navigate(`/incidents/${accident._id}`); // Zakomentované pre ukážku
                 }}
               >
                 Details

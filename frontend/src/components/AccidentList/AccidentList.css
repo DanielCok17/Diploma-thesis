@@ -1,0 +1,11 @@
+/* CSS file or <style> section in your React component file */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  .blinking-icon {
+    animation: blink 1s linear infinite;
+    font-size: 1rem; /* Size of the icon */
+  }
+  
