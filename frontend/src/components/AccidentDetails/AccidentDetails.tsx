@@ -104,21 +104,7 @@ const AccidentDetails: React.FC = () => {
           </Grid>
         </Grid>
       </Paper>
-      {/* <Box sx={{ flexGrow: 1, p: 2 }}>
-         <Typography variant="h4" gutterBottom>
-           Heart Rate Monitoring
-         </Typography>
-         <Grid container spacing={3}>
-           <Grid item xs={20} md={20}>
-             <HeartRateChart />
-           </Grid>
-           <Grid item xs={20} md={20}>
-             <HeartRateChart />
-           </Grid>
-         </Grid>
-       </Box>
-       <AccidentSimulation /> */}
-<Box sx={{ display: 'flex', flexDirection: 'row', p: 2 }}>
+{/* <Box sx={{ display: 'flex', flexDirection: 'row', p: 2 }}>
   <Box sx={{ flexGrow: 1, mr: 2 }}>
     <Typography variant="h4" gutterBottom>
       Heart Rate Monitoring
@@ -139,6 +125,44 @@ const AccidentDetails: React.FC = () => {
     <AccidentSimulation />
   </Box>
   <Box sx={{ flexGrow: 1 }}>
+    <RescueMissionDetails />
+  </Box>
+</Box> */}
+<Box sx={{
+  display: 'flex',
+  flexDirection: { xs: 'column', md: 'row' },  // Column layout for extra-small to medium screens, row for medium and above
+  p: 2
+}}>
+  <Box sx={{
+    flexGrow: { xs: 1, md: 1 },
+    mb: { xs: 2, md: 0 }, // Margin bottom on small screens only
+    mr: { xs: 0, md: 2 }  // Margin right on medium and larger screens only
+  }}>
+    <Typography variant="h4" gutterBottom>
+      Heart Rate Monitoring
+    </Typography>
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <HeartRateChart />
+      </Grid>
+      <Grid item xs={12}>
+        <HeartRateChart />
+      </Grid>
+    </Grid>
+  </Box>
+  <Box sx={{
+    flexGrow: { xs: 1, md: 3 },
+    mx: { xs: 0, md: 2 }  // Horizontal margins removed on small screens, added on medium and larger screens
+  }}>
+    <Typography variant="h4" gutterBottom>
+      Accident Simulation
+    </Typography>
+    <AccidentSimulation />
+  </Box>
+  <Box sx={{
+    flexGrow: { xs: 1, md: 1 },
+    mt: { xs: 2, md: 0 }  // Top margin on small screens only
+  }}>
     <RescueMissionDetails />
   </Box>
 </Box>

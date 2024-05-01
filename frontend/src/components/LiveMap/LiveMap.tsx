@@ -46,7 +46,7 @@ const LiveMap: React.FC = () => {
   }
 
   return (
-    <MapContainer center={position} zoom={13} scrollWheelZoom={true} style={{ height: '50vh', width: '50%' }}>
+    <MapContainer center={position} zoom={13} scrollWheelZoom={true} style={{ height: '50vh', width: '100%' }}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

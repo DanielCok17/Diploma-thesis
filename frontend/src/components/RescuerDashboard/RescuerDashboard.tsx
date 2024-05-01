@@ -188,24 +188,50 @@ const RescuerDashboard: React.FC = () => {
 
   return (
     <>
-    <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {/* Main content area with map and accident list */}
-      <Box sx={{ display: 'flex', flex: '1 1 auto' }}>
+      <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+        {/* Main content area with map and accident list */}
+        {/* <Box sx={{ display: 'flex', flex: '1 1 auto' }}>
         <Box sx={{ flex: 4, p: 4 }}>
           <LiveMap />
         </Box>
         <Box sx={{ flex: 2, p: 2, overflowY: 'auto' }}>
           <AccidentList accidents={dummyAccidents} />
         </Box>
-      </Box>
+      </Box> */}
 
-      {/* Separate row for Rescue Units Status, positioned at the bottom */}
-      <Box sx={{ p: 2 }}>
-        <RescueUnitsStatus />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" }, // Stack on small screens, row on medium and up
+            flex: "1 1 auto",
+          }}
+        >
+          <Box
+            sx={{
+              width: { xs: "100%", md: "70%" }, // Full width on small screens, 70% on medium and up
+              p: { xs: 1, sm: 2, md: 4 }, // Adjust padding based on screen size
+            }}
+          >
+            <LiveMap />
+          </Box>
+          <Box
+            sx={{
+              width: { xs: "100%", md: "30%" }, // Full width on small screens, 30% on medium and up
+              p: { xs: 1, sm: 2, md: 2 }, // Adjust padding based on screen size
+              overflowY: "auto",
+              maxHeight: { xs: "300px", sm: "400px", md: "none" }, // Set a max height for mobile and tablet, none for desktop
+            }}
+          >
+            <AccidentList accidents={dummyAccidents} />
+          </Box>
+        </Box>
+
+        {/* Separate row for Rescue Units Status, positioned at the bottom */}
+        <Box sx={{ p: 2 }}>
+          <RescueUnitsStatus />
+        </Box>
       </Box>
-    </Box>
     </>
-  
   );
 };
 

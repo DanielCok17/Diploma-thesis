@@ -1,45 +1,103 @@
-// src/components/SuperAdminHeader.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import {
   AppBar,
   Toolbar,
   Typography,
   Button,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../Login/AuthContext'; // Adjust the import path as necessary
+import { useAuth } from '../Login/AuthContext';
 
 const SuperAdminHeader: React.FC = () => {
+  const [mobileOpen, setMobileOpen] = useState(false);
   const navigate = useNavigate();
+  const auth = useAuth();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // This will check if the screen size is 'sm' or smaller
 
-  // Handle creation of new rescue centers (you'll need to add your own logic here)
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   const handleCreateCenter = () => {
-    // This would be replaced with your actual navigation/route logic
     navigate('/list-of-rescue-centers');
   };
 
-  const auth = useAuth(); // Use the auth context
-
   const handleLogout = () => {
-    auth.logout(); // Assuming your auth context has a logout method
-    navigate('/login'); // Adjust the route as necessary
+    auth.logout();
+    navigate('/login');
   };
 
-    const handleCreateCenter2 = () => {
-        navigate('/new-rescue-center');
-    };
+  const handleCreateCenter2 = () => {
+    navigate('/new-rescue-center');
+  };
+
+  const drawer = (
+    <List>
+      <ListItem button onClick={handleCreateCenter2}>
+        <ListItemText primary="Super admin dashboard" />
+      </ListItem>
+      <ListItem button onClick={handleCreateCenter}>
+        <ListItemText primary="List of Rescue Centers" />
+      </ListItem>
+      <ListItem button onClick={handleLogout}>
+        <ListItemText primary="Logout" />
+      </ListItem>
+    </List>
+  );
 
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-        <Button color="inherit" onClick={handleCreateCenter2}> Super admin dashboard </Button>
-        </Typography>
-        <Button color="inherit" onClick={handleCreateCenter}>
-          List of Rescue Centers
-        </Button>
-        <Button color="inherit" onClick={handleLogout}>Logout</Button>
+      {isMobile && (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+  
+</Typography>
+<Button color="inherit" sx={{ display: { xs: 'none', sm: 'block' } }} onClick={handleCreateCenter2}>
+  Super admin dashboard
+</Button>
+<Button color="inherit" sx={{ display: { xs: 'none', sm: 'block' } }} onClick={handleCreateCenter}>
+  List of Rescue Centers
+</Button>
+<Button color="inherit" sx={{ display: { xs: 'none', sm: 'block' } }} onClick={handleLogout}>
+  Logout
+</Button>
+
+
+        
       </Toolbar>
+      <Drawer
+        variant="temporary"
+        open={mobileOpen}
+        onClose={handleDrawerToggle}
+        ModalProps={{
+          keepMounted: true, // Better open performance on mobile.
+        }}
+        sx={{
+          display: { xs: 'block', sm: 'none' },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: 240 }
+        }}
+      >
+        {drawer}
+      </Drawer>
     </AppBar>
   );
 };
