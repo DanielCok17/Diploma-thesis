@@ -85,7 +85,7 @@ const AccidentList: React.FC<Props> = ({ accidents }) => {
                 color="primary"
                 onClick={() => {
                   console.log(`Clicked on accident #${index + 1}`);
-                  navigate(`/incidents/${accident._id}`); // Zakomentované pre ukážku
+                  navigate(`/accident-details/${accident._id}`); // Zakomentované pre ukážku
                 }}
               >
                 Details
