@@ -11,16 +11,28 @@ const Login: React.FC = () => {
   const auth = useAuth(); // Use the hook to get auth context
 
   const handleLogin = () => {
-    const isDispatcher = username === 'admin' && password === 'adminn';
-    const isRescuer = username === 'user' && password === 'userr';
+    const isDispatcher = username === 'admin' && password === 'admin';
+    const isRescuer = username === 'user' && password === 'user';
+    const isSuperAdmin = username === 'superadmin' && password === 'superadmin';
+    // for rescuer
+    const isRescuer2 = username === 'rescuer' && password === 'rescuer';
   
     if (isDispatcher) {
-      auth.login('dispatcher'); // Pass 'dispatcher' as the role argument
+      auth.login('admin'); // Pass 'dispatcher' as the role argument
       navigate('/admin');
     } else if (isRescuer) {
-      auth.login('rescuer'); // Pass 'rescuer' as the role argument
+      auth.login('user'); // Pass 'rescuer' as the role argument
       navigate('/user');
-    } else {
+    } 
+    else if (isSuperAdmin) {
+      auth.login('superadmin'); // Pass 'superadmin' as the role argument
+      navigate('/new-rescue-center');
+    }
+    else if (isRescuer2) {
+      auth.login('rescuer2'); // Pass 'rescuer' as the role argument
+      navigate('/rescuer2');
+    }
+    else {
       alert('Invalid credentials');
     }
   };

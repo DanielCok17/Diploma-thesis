@@ -1,5 +1,5 @@
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
-import Header from "./components/Header/Header";
+import Header from "./components/Header/UserHeader";
 import TrafficMap from "./components/TrafficMap/TrafficMap";
 import GoogleMaps from "./components/GoogleMaps/GoogleMaps";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -14,21 +14,39 @@ import DataTable from "./components/TestData/TestData";
 import Login from "./components/Login/Login";
 import RescuerDashboard from "./components/RescuerDashboard/RescuerDashboard";
 import { useAuth } from "./components/Login/AuthContext";
+import AccidentDetails from "./components/AccidentDetails/AccidentDetails";
+import ResourceOverview from "./components/ResourceOverview/ResourceOverview";
+import ReportingAnalytics from "./components/ReportingAnalytics/ReportingAnalytics";
+import NewRescueCenter from "./components/SuperAdmin/NewRescueCenter";
+import SuperAdminHeader from "./components/Header/SuperAdminHeader";
+import Cookies from 'js-cookie';
+import ListOfRescueCenters from "./components/ListOfRescueCenters/ListOfRescueCenters";
+import Rescuer2Header from "./components/Header/Rescuer2Header";
+import RealTimeIncidentMap from "./components/Rescuer2/RealTimeIncidentMap";
 
 import "./App.css";
 
 function App() {
   const { isLoggedIn } = useAuth();
 
+  const role = Cookies.get('role');
+  console.log(role);
+
+
   return (
     <Router>
       <div>
         {isLoggedIn ? (
           <>
-            <Header />
+        {role === 'superadmin' &&  <SuperAdminHeader />}
+        {role === 'admin' && <Header />}
+        {role === 'user' && <Header />}
+        {role === 'rescuer2' && <Rescuer2Header />}
             <Routes>
-              <Route path="/admin" element={<MyMap />} />
+              {/* <Route path="/admin" element={<MyMap />} /> */}
+              <Route path="/admin" element={<RescuerDashboard />} />
               <Route path="/user" element={<RescuerDashboard />} />
+              <Route path="/rescuer2" element={<RealTimeIncidentMap />} />
               <Route path="/test-data" element={<DataTable />} />
               <Route path="/vehicle-sensors" element={<VehicleSensors />} />
               <Route path="/public-reports" element={<PublicReports />} />
@@ -37,6 +55,11 @@ function App() {
               <Route path="/other-cars-info" element={<OtherCarsInfo />} />
               <Route path="/passenger-info" element={<PassengerInfo />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/accident-details/:id" element={<AccidentDetails />} />
+              <Route path="/resource-overview" element={<ResourceOverview />} />
+              <Route path="/reporting-analytics" element={<ReportingAnalytics />} />
+              <Route path="/new-rescue-center" element={<NewRescueCenter />} />
+              <Route path="/list-of-rescue-centers" element={<ListOfRescueCenters />} />
             </Routes>
           </>
         ) : (

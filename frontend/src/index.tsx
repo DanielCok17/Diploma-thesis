@@ -4,6 +4,18 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from './components/Login/AuthContext';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+// Vytvorenie vlastnej témy
+const theme = createTheme({
+  palette: {
+    error: {
+      main: '#f44336', // Nastavte svoju farbu pre error
+    },
+    // ostatné farby témy
+  },
+  // ostatné nastavenia témy
+});
 
 
 const root = ReactDOM.createRoot(
@@ -11,9 +23,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+        <ThemeProvider theme={theme}>
+
       <AuthProvider>
         <App />
       </AuthProvider>
+      </ThemeProvider>
+
   </React.StrictMode>,
 );
 
