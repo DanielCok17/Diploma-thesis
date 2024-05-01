@@ -8,7 +8,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PeopleIcon from "@mui/icons-material/People";
 import { useNavigate } from "react-router-dom"; // Import useNavigate hook
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import { styled, keyframes } from '@mui/system';
+// import { styled, keyframes } from '@mui/system';
 
 interface Accident {
   _id: string;
@@ -38,17 +38,16 @@ interface Props {
 
 const AccidentList: React.FC<Props> = ({ accidents }) => {
   const navigate = useNavigate(); // Inicializujeme hook useNavigate
-  const blink = keyframes`
+  const blinkKeyframes = `
   0% { opacity: 1; }
   50% { opacity: 0.5; }
   100% { opacity: 1; }
 `;
 
-// Štylizovaná ikona pre blikajúci efekt
-const BlinkingStatus = styled(FiberManualRecordIcon)({
-  animation: `${blink} 1s linear infinite`,
-  fontSize: '1rem', // Veľkosť ikony
-});
+const BlinkingStatus = ({ className, color }: { className?: string; color?: string }) => (
+  <FiberManualRecordIcon className={`${className} blink`} style={{ color: color }} />
+);
+
 
 
   return (
