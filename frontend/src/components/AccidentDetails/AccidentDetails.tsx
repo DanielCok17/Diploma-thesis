@@ -11,6 +11,7 @@ import WarningIcon from "@mui/icons-material/Warning";
 import DriveEtaIcon from "@mui/icons-material/DriveEta";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import HeartRateChart from "../HeartRateChart/HeartRateChart";
+import HeartRateChart2 from "../HeartRateChart/HeartRateChart2";
 import AccidentSimulation from "../AccidentSimulation/AccidentSimulation";
 import RescueMissionDetails from "../RescueMissionDetails/RescueMissionDetails";
 import axios from "axios";
@@ -152,7 +153,7 @@ const AccidentDetails: React.FC = () => {
               <HeartRateChart />
             </Grid>
             <Grid item xs={12}>
-              <HeartRateChart />
+              <HeartRateChart2 />
             </Grid>
           </Grid>
         </Box>

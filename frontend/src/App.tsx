@@ -23,7 +23,6 @@ import Cookies from 'js-cookie';
 import ListOfRescueCenters from "./components/ListOfRescueCenters/ListOfRescueCenters";
 import Rescuer2Header from "./components/Header/Rescuer2Header";
 import RealTimeIncidentMap from "./components/Rescuer2/RealTimeIncidentMap";
-
 import "./App.css";
 
 function App() {

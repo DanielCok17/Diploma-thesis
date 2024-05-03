@@ -62,7 +62,6 @@ router.get('/', async (req, res) => {
 
 // get rescue center by userId
 router.get('/user/:userId', async (req, res) => {
-    console.log('here');
     const { userId } = req.params;
 
     try {

@@ -1,117 +1,67 @@
-// require('dotenv').config();
-// const WebSocket = require('ws');
-// const AccidentStream = require('../models/AccidentStream'); // Adjust the path as needed
-
-// function startWebSocketServer(server) {
-//     const wss = new WebSocket.Server({ server });
-
-//     wss.on('connection', ws => {
-//         console.log('Client connected to WebSocket /accident-stream');
-
-//         ws.on('message', async (message) => {
-//             let data;
-//             try {
-//                 console.log('Received message:', message);
-//                 data = JSON.parse(message);
-//             } catch (error) {
-//                 console.error('Error parsing message:', error);
-//                 ws.send(JSON.stringify({ error: 'Invalid JSON format' }));
-//                 return;
-//             }
-
-//             // Validate data
-//             if (!data.vin) {
-//                 ws.send(JSON.stringify({ error: 'VIN is required' }));
-//                 return;
-//             }
-
-//             // Process data
-//             try {
-//                 const accidentStream = new AccidentStream(data);
-//                 await accidentStream.save();
-//                 ws.send(JSON.stringify({ message: 'Data saved successfully', data }));
-//             } catch (error) {
-//                 console.error('Error saving data:', error);
-//                 ws.send(JSON.stringify({ error: 'Failed to save data', details: error.message }));
-//             }
-//         });
-
-//         ws.on('close', () => {
-//             console.log('WebSocket client disconnected');
-//         });
-
-//         ws.onerror = (error) => {
-//             console.error('WebSocket error:', error);
-//         };
-//     });
-// }
-
-// module.exports = startWebSocketServer;
-
+require('dotenv').config();
 const WebSocket = require('ws');
-const AccidentStreamSchema = require('../models/AccidentStream'); // Adjust the path and schema definition as needed
+const AccidentStream = require('../models/AccidentStream'); // Adjust the path as needed
 
 function startWebSocketServer(server) {
-  const wss = new WebSocket.Server({ server });
+    const wss = new WebSocket.Server({ server });
 
-  wss.on('connection', (ws) => {
-    console.log('Client connected to WebSocket /accident-stream');
+    wss.on('connection', (ws) => {
+        //   console.log('Client connected');
 
-    ws.on('message', async (message) => {
-      let data;
-      try {
-        console.log('Received message:', message);
-        data = JSON.parse(message);
-      } catch (error) {
-        console.error('Error parsing message:', error);
-        ws.send(JSON.stringify({ error: 'Invalid JSON format' }));
-        return;
-      }
+        ws.on('message', async (message) => {
 
-      // Validate data
-      if (!data.vin) {
-        ws.send(JSON.stringify({ error: 'VIN is required' }));
-        return;
-      }
+            const data = JSON.parse(message); // Parse the JSON string to an object
+            const vin = data.vin; // Access the 'vin' property
+            const passengers = data.passengers; // Access the 'passengers' property
+        
 
-      // Extract and process heart rate (if present)
-      const heartRate = data.heartRate; // Assuming 'heartRate' property exists in the message
+            // Create a document instance using the model and save it to the database
+            const accidentStream = new AccidentStream({ vin, passengers });
+            const savedAccidentStream = await accidentStream.save();
 
-      if (heartRate) {
-        try {
-          // Assuming 'AccidentStreamSchema' is a valid Mongoose model or similar
-          const accidentStream = new AccidentStreamSchema(data);
-          // Assuming 'accidentStream.save()' saves the data to the database
-          await accidentStream.save();
+            let isBinary = Buffer.isBuffer(message);
 
-          // Broadcast success message to all connected clients
-          wss.clients.forEach(client => {
-            if (client.readyState === WebSocket.OPEN) {
-              client.send(JSON.stringify({ message: 'Data saved successfully', data }));
+            if (isBinary) {
+                // Assuming binary data is in the form of a stringified JSON
+                try {
+                    message = JSON.parse(Buffer.from(message).toString());
+                    isBinary = false;  // Now the message is a JavaScript object, not binary
+                } catch (err) {
+                    console.error('Failed to parse binary data to JSON:', err);
+                    return;  // Stop further processing if the conversion fails
+                }
             }
-          });
-        } catch (error) {
-          console.error('Error saving data:', error);
-          ws.send(JSON.stringify({ error: 'Failed to save data', details: error.message }));
-        }
-      } else {
-        console.warn('Received message without heartRate property:', data);
-      }
-    });    
 
-    // Handle WebSocket errors and closing
-    ws.onerror = (error) => {
-      console.error('WebSocket error:', error);
-      // Implement error handling or reconnection logic here (optional)
-    };
+            // Convert the message to a string if it's a JSON object
+            if (typeof message === 'object' && !isBinary) {
+                message = JSON.stringify(message);
+            }
 
-    ws.onclose = () => {
-      console.log('WebSocket connection closed');
-      // Implement reconnection logic here (optional)
-    };
+            wss.clients.forEach((client) => {
+                if (client !== ws && client.readyState === WebSocket.OPEN) {
+                    // If the original message was binary and successfully converted to JSON, send as text
+                    client.send(message, { binary: isBinary });
+                }
+            });
+        });
 
-    return () => ws.close(); // Ensure WebSocket connection is closed on cleanup
-  });
+        ws.on('close', () => {
+            console.log('Client disconnected');
+        });
+
+    });
+
+    AccidentStream.watch().on('change', (change) => {
+        console.log('Change detected:', change);
+        wss.clients.forEach((client) => {
+            if (client.readyState === WebSocket.OPEN) {
+                client.send(JSON.stringify(change));
+            }
+        });
+    });
 }
+
+
+
 
 module.exports = startWebSocketServer;
