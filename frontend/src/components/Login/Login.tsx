@@ -20,6 +20,11 @@ const Login: React.FC = () => {
   console.log('REACT_APP_ENVIRONMENT:', process.env.REACT_APP_ENVIRONMENT);
   console.log('REACT_APP_PROD_URL:', process.env.REACT_APP_PROD_URL);
 
+  // if url is undefined, set it to REACT_APP_PROD_URL
+  if (!url) {
+    url = process.env.REACT_APP_PROD_URL;
+  }
+
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
