@@ -5,7 +5,6 @@ import { Button, TextField, Container, Typography, Box, Snackbar, IconButton } f
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-// require('dotenv').config()
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -19,6 +18,7 @@ const Login: React.FC = () => {
   let url = process.env.REACT_APP_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
   console.log('URL:', url);
   console.log('REACT_APP_ENVIRONMENT:', process.env.REACT_APP_ENVIRONMENT);
+  console.log('REACT_APP_PROD_URL:', process.env.REACT_APP_PROD_URL);
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
