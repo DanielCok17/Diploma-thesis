@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Paper, Grid, Typography, Box } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import SpeedIcon from "@mui/icons-material/Speed";
@@ -13,47 +13,70 @@ import TimelineIcon from "@mui/icons-material/Timeline";
 import HeartRateChart from "../HeartRateChart/HeartRateChart";
 import AccidentSimulation from "../AccidentSimulation/AccidentSimulation";
 import RescueMissionDetails from "../RescueMissionDetails/RescueMissionDetails";
+import axios from "axios";
+let url = process.env.REACT_APP_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
 
 // Sample data, replace with actual data from your database
-const accident = {
-  timestamp: new Date().toISOString(),
-  vin: "1HGBH41JXMN109186",
-  last_timestamp_check: new Date().toISOString(),
-  acceleration: 3.5,
-  speed: 80,
-  license_plates: ["XYZ 1234", "ABC 5678"],
-  coordinates: [52.52, 13.405], // Assuming this represents latitude and longitude
-  violations: [
-    {
-      type: "Speeding",
-      coordinates: [52.52, 13.405], // Assuming this represents latitude and longitude
-      timestamp: new Date().toISOString(),
-    },
-    // ... add more violations as needed
-  ],
+interface Accident {
+  _id: string;
+  timestamp: Date;
+  vin: string;
+  last_timestamp_check: Date;
+  acceleration: number;
+  speed: number;
+  license_plates: string[];
+  coordinates: number[]; // [latitude, longitude]
+  violations: Array<{
+    type: string;
+    coordinates: number[]; // [latitude, longitude]
+    timestamp: Date;
+  }>;
   driver: {
-    seatbelt: false,
-    drowsiness: true,
-    heart_rate: [110, 115, 120], // Assuming this is an array of heart rate readings
-  },
-  passengers_num: 3,
-};
+    seatbelt: boolean;
+    drowsiness: boolean;
+    heart_rate: number[];
+  };
+  passengers_num: number;
+}
 
 const AccidentDetails: React.FC = () => {
+  const [accident, setAccident] = useState<Accident | null>(null);
+
+  // Fetch accident details from the server
+  useEffect(() => {
+    const fetchAccidentDetails = async () => {
+      // get accident id from the URL
+      const urlPath = window.location.hash; // Gets the hash part of the URL which includes '#'
+      const accidentId = urlPath.split("/accident-details/")[1];
+      try {
+        const response = await axios.get(`${url}/accident/${accidentId}`);
+        setAccident(response.data);
+      } catch (error) {
+        console.error("Error fetching accident details:", error);
+      }
+    };
+
+    fetchAccidentDetails();
+  }, []);
+
   // Function to render violations
-  const renderViolations = (violations: typeof accident.violations) => {
-    return (
-      <Box>
-        {violations.map((violation, index) => (
-          <Typography key={index} variant="body2">
-            {`${violation.type} at ${new Date(violation.timestamp).toLocaleTimeString()} (${violation.coordinates.join(
-              ", "
-            )})`}
-          </Typography>
-        ))}
-      </Box>
-    );
-  };
+  // const renderViolations = (violations: typeof accident.violations) => {
+  //   return (
+  //     <Box>
+  //       {violations.map((violation, index) => (
+  //         <Typography key={index} variant="body2">
+  //           {`${violation.type} at ${new Date(violation.timestamp).toLocaleTimeString()} (${violation.coordinates.join(
+  //             ", "
+  //           )})`}
+  //         </Typography>
+  //       ))}
+  //     </Box>
+  //   );
+  // };
+
+  if (!accident) {
+    return <p>Loading accident details...</p>; // or some loading spinner
+  }
 
   return (
     <>
@@ -104,71 +127,53 @@ const AccidentDetails: React.FC = () => {
           </Grid>
         </Grid>
       </Paper>
-{/* <Box sx={{ display: 'flex', flexDirection: 'row', p: 2 }}>
-  <Box sx={{ flexGrow: 1, mr: 2 }}>
-    <Typography variant="h4" gutterBottom>
-      Heart Rate Monitoring
-    </Typography>
-    <Grid container spacing={3}>
-      <Grid item xs={12}>
-        <HeartRateChart />
-      </Grid>
-      <Grid item xs={12}>
-        <HeartRateChart />
-      </Grid>
-    </Grid>
-  </Box>
-  <Box sx={{ flexGrow: 3, ml: 2, mr: 2 }}>
-    <Typography variant="h4" gutterBottom>
-      Accident Simulation
-    </Typography>
-    <AccidentSimulation />
-  </Box>
-  <Box sx={{ flexGrow: 1 }}>
-    <RescueMissionDetails />
-  </Box>
-</Box> */}
-<Box sx={{
-  display: 'flex',
-  flexDirection: { xs: 'column', md: 'row' },  // Column layout for extra-small to medium screens, row for medium and above
-  p: 2
-}}>
-  <Box sx={{
-    flexGrow: { xs: 1, md: 1 },
-    mb: { xs: 2, md: 0 }, // Margin bottom on small screens only
-    mr: { xs: 0, md: 2 }  // Margin right on medium and larger screens only
-  }}>
-    <Typography variant="h4" gutterBottom>
-      Heart Rate Monitoring
-    </Typography>
-    <Grid container spacing={3}>
-      <Grid item xs={12}>
-        <HeartRateChart />
-      </Grid>
-      <Grid item xs={12}>
-        <HeartRateChart />
-      </Grid>
-    </Grid>
-  </Box>
-  <Box sx={{
-    flexGrow: { xs: 1, md: 3 },
-    mx: { xs: 0, md: 2 }  // Horizontal margins removed on small screens, added on medium and larger screens
-  }}>
-    <Typography variant="h4" gutterBottom>
-      Accident Simulation
-    </Typography>
-    <AccidentSimulation />
-  </Box>
-  <Box sx={{
-    flexGrow: { xs: 1, md: 1 },
-    mt: { xs: 2, md: 0 }  // Top margin on small screens only
-  }}>
-    <RescueMissionDetails />
-  </Box>
-</Box>
-
-</>
-
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" }, // Column layout for extra-small to medium screens, row for medium and above
+          p: 2,
+        }}
+      >
+        <Box
+          sx={{
+            flexGrow: { xs: 1, md: 1 },
+            mb: { xs: 2, md: 0 }, // Margin bottom on small screens only
+            mr: { xs: 0, md: 2 }, // Margin right on medium and larger screens only
+          }}
+        >
+          <Typography variant="h4" gutterBottom>
+            Heart Rate Monitoring
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <HeartRateChart />
+            </Grid>
+            <Grid item xs={12}>
+              <HeartRateChart />
+            </Grid>
+          </Grid>
+        </Box>
+        <Box
+          sx={{
+            flexGrow: { xs: 1, md: 3 },
+            mx: { xs: 0, md: 2 }, // Horizontal margins removed on small screens, added on medium and larger screens
+          }}
+        >
+          <Typography variant="h4" gutterBottom>
+            Accident Simulation
+          </Typography>
+          <AccidentSimulation />
+        </Box>
+        <Box
+          sx={{
+            flexGrow: { xs: 1, md: 1 },
+            mt: { xs: 2, md: 0 }, // Top margin on small screens only
+          }}
+        >
+          <RescueMissionDetails />
+        </Box>
+      </Box>
+    </>
   );
 };
 

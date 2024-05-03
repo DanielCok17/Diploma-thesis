@@ -18,7 +18,8 @@ const accidentSchema = new mongoose.Schema({
     drowsiness: { type: Boolean, required: true },
     heart_rate: [Number] // Array of heart rate readings
   },
-  passengers_num: { type: Number, required: true }
+  passengers_num: { type: Number, required: true },
+  status : { type: String, default: 'pending' },
 });
 
 const AccidentReport = mongoose.model('AccidentReport', accidentSchema);

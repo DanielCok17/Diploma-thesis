@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 interface AuthContextType {
   isLoggedIn: boolean;
   role: string | null; // Add role to the context type
-  login: (role: string) => void;
+  login: (role: string, userId: string) => void;
   logout: () => void;
 }
 
@@ -25,15 +25,21 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(!!Cookies.get('role'));
   const [role, setRole] = useState<string | null>(Cookies.get('role') || null);
+  // set userId
+  const [userId, setUserId] = useState<string | null>(Cookies.get('userId') || null);
 
-  const login = (role: string) => {
+  const login = (role: string, userId: string) => {
     setIsLoggedIn(true);
     setRole(role);
+    setUserId(userId);
     Cookies.set('role', role, { expires: 7 }); // Sets the role cookie with a 7-day expiration
+    Cookies.set('userId', userId, { expires: 7 }); // Sets the userId cookie with a 7-day expiration
   };
 
   const logout = () => {
     Cookies.remove('role');
+    Cookies.remove('token');
+    Cookies.remove('userId');
     setIsLoggedIn(false);
     setRole(null);
   };

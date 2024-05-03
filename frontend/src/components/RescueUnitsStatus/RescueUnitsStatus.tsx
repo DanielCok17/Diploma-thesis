@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
   Card,
   CardContent,
@@ -15,65 +16,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import { green, red, yellow } from '@material-ui/core/colors';
 
 // Define types
-type UnitStatus = 'Ready' | 'Busy' | 'Unavailable';
+type UnitStatus = 'Available' | 'Busy' | 'On the way';
 
 interface RescueUnit {
-    type: string; 
+  type: string;
   status: UnitStatus;
   count: number;
-  commander: string;
+  username: string;
   incidentId?: string;
 }
-
-// Prepare the units array with data
-const units: RescueUnit[] = [
-    {
-        type: 'Emergency 1',
-        status: 'Ready',
-        count: 1,
-        commander: 'John Doe',
-      },
-      {
-        type: 'Emergency 2',
-        status: 'Busy',
-        count: 1,
-        commander: 'Emily Roe',
-        incidentId: 'INC-001',
-      },
-      // ... you can add more Emergency units as needed
-      {
-        type: 'Police 1',
-        status: 'Busy',
-        count: 2,
-        commander: 'Jane Doe',
-        incidentId: 'INC-123',
-      },
-      {
-        type: 'Firefighters 1',
-        status: 'Unavailable',
-        count: 1,
-        commander: 'John Smith',
-      },
-      {
-        type: 'Firefighters 2',
-        status: 'Ready',
-        count: 3,
-        commander: 'Jane Smith',
-      },
-        // ... you can add more Firefighters units as needed
-        {
-            type: 'Police 2',
-            status: 'Ready',
-            count: 1,
-            commander: 'John Johnson',
-        },
-        {
-            type: 'Police 3',
-            status: 'Ready',
-            count: 2,
-            commander: 'Jane Johnson',
-        },
-];
 
 // Use makeStyles hook to create classes
 const useStyles = makeStyles({
@@ -99,19 +50,34 @@ const useStyles = makeStyles({
 
 const RescueUnitsStatus: React.FC = () => {
   const classes = useStyles();
+  const [units, setUnits] = useState<RescueUnit[]>([]);
+  let url = process.env.REACT_APP_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
+
+  useEffect(() => {
+    const fetchUnits = async () => {
+      try {
+        const response = await axios.get<RescueUnit[]>(`${url}/rescue-unit`);
+        setUnits(response.data);
+      } catch (error) {
+        console.error('Failed to fetch units:', error);
+      }
+    };
+
+    fetchUnits();
+  }, []);
 
   const getStatusChip = (status: UnitStatus, incidentId?: string) => {
     let label = status;
     let className = '';
     switch (status) {
-      case 'Ready':
+      case 'Available':
         className = classes.chipReady;
         break;
       case 'Busy':
         className = classes.chipBusy;
         label += incidentId ? ` (Incident ID: ${incidentId})` : '';
         break;
-      case 'Unavailable':
+      case 'On the way':
         className = classes.chipUnavailable;
         break;
     }
@@ -134,15 +100,8 @@ const RescueUnitsStatus: React.FC = () => {
                 </Avatar>
               </ListItemAvatar>
               <ListItemText
-                primary={`${unit.type} - Commander: ${unit.commander}`}
-                secondary={
-                  <>
-                    {getStatusChip(unit.status, unit.incidentId)}
-                    {/* <Typography component="span" color="textSecondary">
-                      {` | Personnel: ${unit.count}`}
-                    </Typography> */}
-                  </>
-                }
+                primary={`${unit.type} - ${unit.username}`}
+                secondary={getStatusChip(unit.status, unit.incidentId)}
               />
             </ListItem>
           ))}

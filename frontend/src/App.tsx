@@ -30,8 +30,6 @@ function App() {
   const { isLoggedIn } = useAuth();
 
   const role = Cookies.get('role');
-  console.log(role);
-
 
   return (
     <Router>
@@ -41,6 +39,7 @@ function App() {
         {role === 'superadmin' &&  <SuperAdminHeader />}
         {role === 'admin' && <Header />}
         {role === 'user' && <Header />}
+        {role === 'dispatcher' && <Header />}
         {role === 'rescuer2' && <Rescuer2Header />}
             <Routes>
               {/* <Route path="/admin" element={<MyMap />} /> */}
