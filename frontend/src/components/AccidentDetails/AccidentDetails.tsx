@@ -16,6 +16,9 @@ import RescueMissionDetails from "../RescueMissionDetails/RescueMissionDetails";
 import axios from "axios";
 let url = process.env.REACT_APP_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
 
+if (!url) {
+  url = process.env.REACT_APP_PROD_URL;
+}
 // Sample data, replace with actual data from your database
 interface Accident {
   _id: string;

@@ -54,6 +54,10 @@ const LiveMap: React.FC = () => {
   const [pendingAccidents, setPendingAccidents] = useState<Accident[]>([]);
   const navigate = useNavigate(); // Inicializujeme hook useNavigate
 
+  if (!url) {
+    url = process.env.REACT_APP_PROD_URL;
+  }
+
 
   useEffect(() => {
     // Fetch current user position

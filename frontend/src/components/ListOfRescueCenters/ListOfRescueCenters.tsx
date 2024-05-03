@@ -32,6 +32,10 @@ const ListOfRescueCenters: React.FC = () => {
   const [centers, setCenters] = useState<RescueCenter[]>([]);
   const [editId, setEditId] = useState<string | null>(null);
 
+  if (!url) {
+    url = process.env.REACT_APP_PROD_URL;
+  }
+
   useEffect(() => {
     const fetchRescueCenters = async () => {
       try {

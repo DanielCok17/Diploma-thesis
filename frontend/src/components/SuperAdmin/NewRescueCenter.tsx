@@ -9,6 +9,10 @@ import { AlertColor } from "@mui/material/Alert";
 
 let url = process.env.REACT_APP_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
 
+if (!url) {
+  url = process.env.REACT_APP_PROD_URL;
+}
+
 interface User {
   _id: string; // assuming _id is provided by MongoDB
   username: string;

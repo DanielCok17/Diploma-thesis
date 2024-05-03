@@ -144,6 +144,9 @@ const AccidentList: React.FC<Props> = ({ accidents }) => {
   const [pendingAccidents, setPendingAccidents] = useState<Accident[]>([]);
   let url = process.env.REACT_APP_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
 
+  if (!url) {
+    url = process.env.REACT_APP_PROD_URL;
+  }
 
   useEffect(() => {
     const fetchPendingAccidents = async () => {

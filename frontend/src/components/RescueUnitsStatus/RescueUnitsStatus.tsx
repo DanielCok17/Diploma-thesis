@@ -53,6 +53,10 @@ const RescueUnitsStatus: React.FC = () => {
   const [units, setUnits] = useState<RescueUnit[]>([]);
   let url = process.env.REACT_APP_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
 
+  if (!url) {
+    url = process.env.REACT_APP_PROD_URL;
+  }
+  
   useEffect(() => {
     const fetchUnits = async () => {
       try {

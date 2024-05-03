@@ -30,7 +30,7 @@ type AccidentData = {
 
 const DataTable = () => {
     let url =
-    process.env.REACT_APP_ENVIRONMENT === "production" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
+    process.env.REACT_APP_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
     console.log(url);
 
     // if url is undefined than
