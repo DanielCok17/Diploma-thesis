@@ -119,12 +119,12 @@ const HeartRateChart = () => {
   // Specify the ChartData type for the state
   const [data, setData] = useState<ChartData>(initialData);
 
-  let url: string;
-  if (process.env.REACT_APP_ENVIRONMENT === "prod") {
-    url = process.env.REACT_APP_PROD_URL_WS || 'wss://diploma-thesis-backend.onrender.com';
-  } else {
-    url = process.env.REACT_APP_DEV_URL_WS || 'wss://diploma-thesis-backend.onrender.com';
-  }
+  let url: string = 'wss://diploma-thesis-backend.onrender.com'
+  // if (process.env.REACT_APP_ENVIRONMENT === "prod") {
+  //   url = process.env.REACT_APP_PROD_URL_WS || 'wss://diploma-thesis-backend.onrender.com';
+  // } else {
+  //   url = process.env.REACT_APP_DEV_URL_WS || 'wss://diploma-thesis-backend.onrender.com';
+  // }
   
   useEffect(() => {
     const ws = new WebSocket(url + '/accident-stream');
