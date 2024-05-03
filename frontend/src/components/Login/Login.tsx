@@ -16,6 +16,7 @@ const Login: React.FC = () => {
   const auth = useAuth();
 
   let url = process.env.REACT_APP_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
+  console.log('URL:', url);
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
