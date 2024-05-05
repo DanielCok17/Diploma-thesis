@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { green, red, yellow } from "@material-ui/core/colors";
-import { Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 // Define types
@@ -98,36 +98,44 @@ const RescueUnitsStatus: React.FC = () => {
 
   return (
     <Card className={classes.card}>
-      <CardContent>
-        <Typography variant="h5" component="h2" gutterBottom>
-          Status of Each Rescue Unit
-        </Typography>
-        <Divider />
-        <List>
-          {units.map((unit, index) => (
-            <ListItem key={index}>
-              <ListItemAvatar>
-                <Avatar className={classes.avatar}>{/* You can use icons for different types of units here */}</Avatar>
-              </ListItemAvatar>
-              <ListItemText
-                primary={`${unit.type} - ${unit.username}`}
-                secondary={getStatusChip(unit.status, unit.accidentId)}
-              />
-              {unit.accidentId && ( // Check if accidentId is not null
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="small"
-                  onClick={() => navigateToIncident(unit.accidentId ? unit.accidentId : "")} // Call the bound function
-                >
-                  Show Details
-                </Button>
+    <CardContent>
+      <Typography variant="h5" component="h2" gutterBottom>
+        Status of Each Rescue Unit
+      </Typography>
+      <Divider />
+      <List>
+        {units.map((unit, index) => (
+          <ListItem key={index}>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item>
+                <ListItemAvatar>
+                  <Avatar className={classes.avatar}>{/* Icons or images can be placed here */}</Avatar>
+                </ListItemAvatar>
+              </Grid>
+              <Grid item xs>
+                <ListItemText
+                  primary={`${unit.type} - ${unit.username}`}
+                  secondary={getStatusChip(unit.status, unit.accidentId)}
+                />
+              </Grid>
+              {unit.accidentId && (
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={() => navigateToIncident(unit.accidentId ? unit.accidentId : "")} // Call the bound function
+                  >
+                    Show Details
+                  </Button>
+                </Grid>
               )}
-            </ListItem>
-          ))}
-        </List>
-      </CardContent>
-    </Card>
+            </Grid>
+          </ListItem>
+        ))}
+      </List>
+    </CardContent>
+  </Card>
   );
 };
 

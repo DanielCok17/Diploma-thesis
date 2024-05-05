@@ -47,12 +47,12 @@ const Rescuer2Header: React.FC = () => {
 
   const drawer = (
     <List>
-      <ListItem button onClick={() => navigate("/map")}>
+      {/* <ListItem button onClick={() => navigate("/map")}>
         <ListItemText primary="Map" />
       </ListItem>
       <ListItem button onClick={() => navigate("/incidents")}>
         <ListItemText primary="Incidents" />
-      </ListItem>
+      </ListItem> */}
       <ListItem button onClick={handleLogout}>
         <ListItemText primary="Logout" />
       </ListItem>
@@ -74,12 +74,12 @@ const Rescuer2Header: React.FC = () => {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
         {name} - {role} Dashboard
         </Typography>
-        <Button color="inherit" sx={{ display: { xs: "none", sm: "block" } }} onClick={() => navigate("/map")}>
+        {/* <Button color="inherit" sx={{ display: { xs: "none", sm: "block" } }} onClick={() => navigate("/map")}>
           Map
         </Button>
         <Button color="inherit" sx={{ display: { xs: "none", sm: "block" } }} onClick={() => navigate("/incidents")}>
           Incidents
-        </Button>
+        </Button> */}
         <Button color="inherit" sx={{ display: { xs: "none", sm: "block" } }} onClick={handleLogout}>
           Logout
         </Button>

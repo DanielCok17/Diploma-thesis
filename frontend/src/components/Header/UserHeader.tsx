@@ -100,9 +100,9 @@ const Header: React.FC = () => {
         <ListItem button key="resources" onClick={() => navigate("/resource-overview")}>
           <ListItemText primary="Resources" />
         </ListItem>
-        <ListItem button key="analytics" onClick={() => navigate("/reporting-analytics")}>
+        {/* <ListItem button key="analytics" onClick={() => navigate("/reporting-analytics")}>
           <ListItemText primary="Analytics" />
-        </ListItem>
+        </ListItem> */}
         <ListItem button key="logout" onClick={handleLogout}>
           <ListItemText primary="Logout" />
         </ListItem>
@@ -123,9 +123,9 @@ const Header: React.FC = () => {
       case 2:
         navigate("/resource-overview");
         break;
-      case 3:
-        navigate("/reporting-analytics");
-        break;
+      // case 3:
+      //   navigate("/reporting-analytics");
+      //   break;
       default:
         navigate("/");
     }
@@ -154,7 +154,7 @@ const Header: React.FC = () => {
             <Tab label="Overview" />
             <Tab label="Incidents" />
             <Tab label="Resources" />
-            <Tab label="Analytics" />
+            {/* <Tab label="Analytics" /> */}
           </Tabs>
         )}
         {!isMobile && (

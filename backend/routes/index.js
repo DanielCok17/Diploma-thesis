@@ -11,6 +11,7 @@ const testRoutes = require('./test');
 const userRoutes = require('./user');
 const rescueCenterRoutes = require('./rescueCenter');
 const rescueUnitRoutes = require('./rescueUnit');
+const closedAccidentRoutes = require('./closedAccident');
 
 expressOasGenerator.init(router, {});
 
@@ -24,5 +25,6 @@ router.use('/test', testRoutes);
 router.use('/user', userRoutes);
 router.use('/rescue-center', rescueCenterRoutes);
 router.use('/rescue-unit', rescueUnitRoutes);
+router.use('/closed-accident', closedAccidentRoutes);
 
 module.exports = router;
