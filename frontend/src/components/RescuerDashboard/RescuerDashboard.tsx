@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Grid, Paper, Typography, Button, List, ListItem, ListItemText, Divider, Chip } from "@mui/material";
 import LiveMap from "../LiveMap/LiveMap";
 import AccidentList from "../AccidentList/AccidentList";
 import AccidentBusyList from "../AccidentList/AccidentBusyList";
+import axios from "axios";
 
 import RescueUnitsStatus from "../RescueUnitsStatus/RescueUnitsStatus";
 
@@ -45,9 +46,39 @@ const RescuerDashboard: React.FC = () => {
     },
   ];
 
+  let url =
+    process.env.REACT_APP_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
+
+  if (!url) {
+    url = process.env.REACT_APP_PROD_URL;
+  }
+
+  // Function to fetch accidents (can also be used to simulate new accidents)
+  const fetchAccidents = async () => {
+    try {
+      const response = await axios.get(`${url}/accident/testAccident/test`);
+      console.log("Accidents fetched", response.data);
+      // Update state with new accident data
+      // setAccidents([...accidents, response.data.newAccident]);
+    } catch (error) {
+      console.error("Failed to fetch accidents:", error);
+    }
+  };
+
+  // Event handler to simulate new accident
+  const simulateNewAccident = () => {
+    console.log("Simulating a new accident");
+    fetchAccidents();
+    // reload the page to see the new accident
+    window.location.reload();
+  };
+
   return (
     <>
       <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+        <Button variant="contained" color="primary" sx={{ m: 2 }} onClick={() => simulateNewAccident()}>
+          Simulate New Accident
+        </Button>
         <Box
           sx={{
             display: "flex",

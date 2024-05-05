@@ -3,6 +3,7 @@ const router = express.Router();
 const AccidentReport = require('../models/Accident'); // Nastavte správnu cestu k súboru modelu
 const { assessAndDispatch } = require('../utils/accidentSeverity');
 const { assignAccidentToUser, endAccident } = require('../utils/assignAccident');
+const { startAccidentDataStream, addNewAccident }  = require('../utils/simulateNewAccident');
 
 router.post('/', async (req, res) => {
     const {
@@ -221,6 +222,35 @@ router.put('/:id/status', async (req, res) => {
     }
 }
 );
+
+// Create HTTP server for WebSocket connection
+const http = require('http');
+const server = http.createServer(router);
+
+// Initialize WebSocket server for streaming accident data
+startAccidentDataStream(server);
+
+router.get('/testAccident/test', async (req, res) => {
+    console.log('Adding new accident and starting data stream...');
+    try {
+        // Add a new accident record to the database
+        const newAccident = await addNewAccident();
+
+        // also call the function to start data stream
+        startAccidentDataStream(server);
+
+        
+
+        // Respond with a success message
+        res.json({
+            message: 'New accident has been added and data streaming has started.',
+            accidentDetails: newAccident
+        });
+    } catch (error) {
+        console.error('Error in adding accident and starting data stream:', error);
+        res.status(500).json({ error: 'Failed to process the request.' });
+    }
+});
 
 
 
