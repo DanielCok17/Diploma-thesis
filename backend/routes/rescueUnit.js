@@ -74,9 +74,9 @@ router.get('/:id', async (req, res) => {
 
 // Aktualizácia vozidla
 router.put('/:id', async (req, res) => {
-    const { type, rescueCenterId, userId, status } = req.body;
+    const { type, rescueCenterId, userId, status, accidentId, defaultLocation, currentLocation } = req.body;
     try {
-        const updatedVehicle = await RescueUnit.findByIdAndUpdate(req.params.id, { type, rescueCenterId, userId, status }, { new: true });
+        const updatedVehicle = await RescueUnit.findByIdAndUpdate(req.params.id, { type, rescueCenterId, userId, status, accidentId, defaultLocation, currentLocation }, { new: true });
         if (!updatedVehicle) {
             return res.status(404).send('Vehicle not found');
         }

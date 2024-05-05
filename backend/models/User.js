@@ -16,7 +16,8 @@ const userSchema = new mongoose.Schema({
   settings: {
     language: { type: String, default: 'English' },
     notifications: { type: Boolean, default: true }
-  }
+  },
+  assignedAccident: { type: mongoose.Schema.Types.ObjectId, ref: 'Accident', default: null },
 });
 
 // Password hash middleware.

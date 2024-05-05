@@ -19,7 +19,9 @@ const accidentSchema = new mongoose.Schema({
     heart_rate: [Number] // Array of heart rate readings
   },
   passengers_num: { type: Number, required: true },
-  status : { type: String, default: 'pending' },
+  status: { type: String, default: 'pending' },
+  assignedUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  rescuerIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'RescueUnit' }]
 });
 
 const AccidentReport = mongoose.model('AccidentReport', accidentSchema);

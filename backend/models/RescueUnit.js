@@ -23,6 +23,17 @@ const rescueVehicleSchema = new Schema({
     required: true,
     enum: ['Available', 'Busy', 'On the way'], // Stavy vozidla
     default: 'Available'
+  },
+  accidentId: {
+    type: Schema.Types.ObjectId,
+    ref: 'AccidentReport',
+    default: null
+  },
+  defaultLocation: {
+    coordinates: { type: [Number], default: [48.185, 17.138] } // [longitude, latitude]
+  },
+  currentLocation: {
+    coordinates: { type: [Number], default: [48.185, 17.138] } // [longitude, latitude]
   }
 }, {
   timestamps: true // Automaticky pridáva `createdAt` a `updatedAt`

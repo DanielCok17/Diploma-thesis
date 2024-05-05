@@ -12,6 +12,7 @@ import PassengerInfo from "./components/Passengers/PassengerInfo";
 import MyMap from "./components/OpenStreetMap/OpenStreetMap";
 import DataTable from "./components/TestData/TestData";
 import Login from "./components/Login/Login";
+import Register from "./components/Login/Register";
 import RescuerDashboard from "./components/RescuerDashboard/RescuerDashboard";
 import { useAuth } from "./components/Login/AuthContext";
 import AccidentDetails from "./components/AccidentDetails/AccidentDetails";
@@ -23,6 +24,7 @@ import Cookies from 'js-cookie';
 import ListOfRescueCenters from "./components/ListOfRescueCenters/ListOfRescueCenters";
 import Rescuer2Header from "./components/Header/Rescuer2Header";
 import RealTimeIncidentMap from "./components/Rescuer2/RealTimeIncidentMap";
+import AllAccidents from "./components/AllAccidents/AllAccidents";
 import "./App.css";
 
 function App() {
@@ -40,6 +42,9 @@ function App() {
         {role === 'user' && <Header />}
         {role === 'dispatcher' && <Header />}
         {role === 'rescuer2' && <Rescuer2Header />}
+        {role === 'rescuer' && <Rescuer2Header />}
+        {role === 'policeman' && <Rescuer2Header />}
+        {role === 'firefighter' && <Rescuer2Header />}
             <Routes>
               {/* <Route path="/admin" element={<MyMap />} /> */}
               <Route path="/admin" element={<RescuerDashboard />} />
@@ -58,12 +63,14 @@ function App() {
               <Route path="/reporting-analytics" element={<ReportingAnalytics />} />
               <Route path="/new-rescue-center" element={<NewRescueCenter />} />
               <Route path="/list-of-rescue-centers" element={<ListOfRescueCenters />} />
+              <Route path="/allAccidents" element={<AllAccidents />} />
             </Routes>
           </>
         ) : (
           <Routes>
             {/* Assuming Login is adjusted to be a Route for consistency */}
             <Route path="*" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         )}
       </div>

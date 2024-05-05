@@ -72,10 +72,6 @@
 
 // export default HeartRateChart;
 
-
-
-
-
 // import React, { useEffect, useState } from 'react';
 // import { Line } from 'react-chartjs-2';
 // import 'chart.js/auto';
@@ -129,7 +125,7 @@
 //   // } else {
 //   //   url = process.env.REACT_APP_DEV_URL_WS || 'wss://diploma-thesis-backend.onrender.com';
 //   // }
-  
+
 //   useEffect(() => {
 //     const ws = new WebSocket(url + '/accident-stream');
 
@@ -140,11 +136,11 @@
 //     ws.onmessage = (event) => {
 //       console.log('Received message:', event.data);
 //       const data = JSON.parse(event.data);
-    
+
 //       if (data.heartRate) { // Check for 'heartRate' property
 //         const newTime = new Date().toLocaleTimeString();
 //         const newHeartRate = data.heartRate;
-    
+
 //         setData(prevData => ({
 //           labels: [...prevData.labels, newTime],
 //           datasets: prevData.datasets.map(dataset => ({
@@ -180,53 +176,48 @@
 
 // export default HeartRateChart;
 
-
-
-
-
 import { useEffect, useState } from "react";
-import useWebSocket from 'react-use-websocket';
-import 'chart.js/auto';
-import { Line } from 'react-chartjs-2';
+import useWebSocket from "react-use-websocket";
+import "chart.js/auto";
+import { Line } from "react-chartjs-2";
 
 type Dataset = {
-    label: string;
-    data: number[];
-    fill: boolean;
-    backgroundColor: string;
-    borderColor: string;
+  label: string;
+  data: number[];
+  fill: boolean;
+  backgroundColor: string;
+  borderColor: string;
 };
 
 type ChartData = {
-    labels: string[];
-    datasets: Dataset[];
+  labels: string[];
+  datasets: Dataset[];
 };
 
 const initialData: ChartData = {
-    labels: [],
-    datasets: [
-        {
-            label: 'Heart Rate (bpm)',
-            data: [],
-            fill: false,
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgba(255, 99, 132, 0.2)',
-        },
-    ],
+  labels: [],
+  datasets: [
+    {
+      label: "Heart Rate (bpm)",
+      data: [],
+      fill: false,
+      backgroundColor: "rgb(255, 99, 132)",
+      borderColor: "rgba(255, 99, 132, 0.2)",
+    },
+  ],
 };
 
 const options = {
-    responsive: true,
-    scales: {
-        y: {
-            beginAtZero: true,
-        },
+  responsive: true,
+  scales: {
+    y: {
+      beginAtZero: true,
     },
-    maintainAspectRatio: false,
+  },
+  maintainAspectRatio: false,
 };
 
 const HeartRateChart: React.FC = () => {
-
   let url: string | null =
     process.env.REACT_APP_ENVIRONMENT === "prod"
       ? process.env.REACT_APP_PROD_URL_WS ?? null
@@ -237,11 +228,11 @@ const HeartRateChart: React.FC = () => {
     url = "wss://diploma-thesis-backend.onrender.com"; // Fallback URL if none is defined
   }
   const [messages, setMessages] = useState<string[]>([]);
-      const [chartData, setChartData] = useState<ChartData>(initialData);
+  const [chartData, setChartData] = useState<ChartData>(initialData);
   const { sendJsonMessage, lastMessage } = useWebSocket(url, {
-    onOpen: () => console.log('Connected to WebSocket server'),
-    onClose: () => console.log('Disconnected from WebSocket server'),
-    onError: (event: Event) => console.error('WebSocket error:', event),
+    onOpen: () => console.log("Connected to WebSocket server"),
+    onClose: () => console.log("Disconnected from WebSocket server"),
+    onError: (event: Event) => console.error("WebSocket error:", event),
     shouldReconnect: (closeEvent: CloseEvent) => true,
   });
 
@@ -257,16 +248,16 @@ const HeartRateChart: React.FC = () => {
       const parsedData = JSON.parse(data);
       // Convert the JSON object to a string representation or handle it according to your needs
       const messageString = JSON.stringify(parsedData, null, 2); // Beautify the JSON string
-      setMessages(prevMessages => [...prevMessages, messageString]);
+      setMessages((prevMessages) => [...prevMessages, messageString]);
     } catch (error) {
-      console.error('Failed to parse message data:', error);
+      console.error("Failed to parse message data:", error);
       // Handle non-JSON data or errors
-      setMessages(prevMessages => [...prevMessages, 'Received non-JSON data']);
+      setMessages((prevMessages) => [...prevMessages, "Received non-JSON data"]);
     }
   };
 
   const handleMessageSend = () => {
-    const message = prompt('Enter message:');
+    const message = prompt("Enter message:");
     if (message) {
       sendJsonMessage({ message });
     }
@@ -274,42 +265,40 @@ const HeartRateChart: React.FC = () => {
 
   useEffect(() => {
     if (lastMessage !== null) {
-        try {
-            const data = JSON.parse(lastMessage.data);
-            console.log('Received message:', data.passengers[0].heart_rate);
-            let hartRate = data.passengers[0].heart_rate;
+      try {
+        const data = JSON.parse(lastMessage.data);
+        console.log("Received message:", data.passengers[0].heart_rate);
+        let hartRate = data.passengers[0].heart_rate;
 
-            if (data.passengers[0].heart_rate) { // assuming your JSON data has a heartRate field
-                const newTime = new Date().toLocaleTimeString();
-                setChartData(prevData => ({
-                    labels: [...prevData.labels, newTime],
-                    datasets: prevData.datasets.map(dataset => ({
-                        ...dataset,
-                        data: [...dataset.data, hartRate]
-                    }))
-                }));
-                // log chart data for debugging
-                console.log(chartData);
-            } else {
-                console.warn('Received message without heart rate data');
-            }
-        } catch (error) {
-            console.error('Failed to parse message data:', error);
+        if (data.passengers[0].heart_rate) {
+          // assuming your JSON data has a heartRate field
+          const newTime = new Date().toLocaleTimeString();
+          setChartData((prevData) => ({
+            labels: [...prevData.labels, newTime],
+            datasets: prevData.datasets.map((dataset) => ({
+              ...dataset,
+              data: [...dataset.data, hartRate],
+            })),
+          }));
+          // log chart data for debugging
+          console.log(chartData);
+        } else {
+          console.warn("Received message without heart rate data");
         }
+      } catch (error) {
+        console.error("Failed to parse message data:", error);
+      }
     }
-}, [lastMessage]);
+  }, [lastMessage]);
 
   return (
-      <div style={{ width: '100%', height: '400px' }}>
-             <Line data={chartData} options={options} />
-         </div>
+    <div style={{ width: "50%", height: "350px" }}>
+      <Line data={chartData} options={options} />
+    </div>
   );
-}
+};
 
 export default HeartRateChart;
-
-
-
 
 // import React, { useEffect, useState } from 'react';
 // import { Line } from 'react-chartjs-2';
@@ -387,5 +376,3 @@ export default HeartRateChart;
 // };
 
 // export default HeartRateChart;
-
-

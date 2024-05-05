@@ -1,235 +1,12 @@
-// // // src/components/AccidentSimulation.tsx
-// // import React, { useState, useEffect } from 'react';
-// // import { Box, Typography } from '@mui/material';
-// // import { styled } from '@mui/system';
-
-// // const Wheel = styled(Box)({
-// //   width: '150px',
-// //   height: '150px',
-// //   borderRadius: '50%',
-// //   border: '5px solid black',
-// //   display: 'flex',
-// //   justifyContent: 'center',
-// //   alignItems: 'center',
-// //   transform: 'rotate(0deg)',
-// //   transition: 'transform 0.5s ease-in-out',
-// // });
-
-// // const Speedometer = styled(Typography)({
-// //   fontSize: '2em',
-// // });
-
-// // const SeatbeltIndicator = styled(Typography)(({ theme }) => ({
-// //   color: theme.palette.error.main,
-// //   fontSize: '1.5em',
-// // }));
-
-// // const AccidentSimulation: React.FC = () => {
-// //   const [speed, setSpeed] = useState(0);
-// //   const [wheelRotation, setWheelRotation] = useState(0);
-// //   const [seatbeltOn, setSeatbeltOn] = useState(false);
-
-// //   // Simulate accident data changes
-// //   useEffect(() => {
-// //     const interval = setInterval(() => {
-// //       setSpeed((prevSpeed) => (prevSpeed >= 80 ? 0 : prevSpeed + 20));
-// //       setWheelRotation((prevRotation) => (prevRotation >= 90 ? -90 : prevRotation + 45));
-// //       setSeatbeltOn((prevSeatbeltOn) => !prevSeatbeltOn);
-// //     }, 3000);
-
-// //     return () => clearInterval(interval);
-// //   }, []);
-
-// //   return (
-// //     <>
-// //     <Box>
-// //       <Wheel sx={{ transform: `rotate(${wheelRotation}deg)` }}>
-// //         <Typography>Wheel</Typography>
-// //       </Wheel>
-// //       <Speedometer>Speed: {speed} km/h</Speedometer>
-// //       <SeatbeltIndicator>
-// //         Seatbelt: {seatbeltOn ? 'On' : 'Off'}
-// //       </SeatbeltIndicator>
-// //     </Box>
-
-// //     </>
-// //   );
-// // };
-
-// // export default AccidentSimulation;
-
 // import React, { useState, useEffect } from 'react';
-// import { Box, Typography, CircularProgress } from '@mui/material';
-// import { styled } from '@mui/system';
+// import { Box, Typography, Paper } from '@mui/material';
+// import './AccidentSimulation.css';
 
-// const Wheel = styled(Box)({
-//   width: '150px',
-//   height: '150px',
-//   borderRadius: '50%',
-//   border: '5px solid black',
-//   display: 'flex',
-//   justifyContent: 'center',
-//   alignItems: 'center',
-//   boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
-//   position: 'relative',
-//   transition: 'transform 0.5s ease-in-out',
-// });
-
-// const Pedal = styled(Box)({
-//   width: '20px',
-//   height: '80px',
-//   backgroundColor: 'gray',
-//   position: 'absolute',
-//   bottom: '10px',
-// });
-
-// const GasPedal = styled(Pedal)({
-//   left: '30px',
-// });
-
-// const BrakePedal = styled(Pedal)({
-//   right: '30px',
-// });
-
-// const Speedometer = styled(Typography)({
-//   fontSize: '1.5em',
-//   marginTop: '1em',
-// });
-
-// const SeatbeltIndicator = styled(Typography)(({ theme }) => ({
-//   color: theme.palette.error.main,
-//   fontSize: '1.5em',
-//   marginTop: '1em',
-// }));
-
-// const AccidentSimulation: React.FC = () => {
-//   const [speed, setSpeed] = useState(0);
-//   const [wheelRotation, setWheelRotation] = useState(0);
-//   const [seatbeltOn, setSeatbeltOn] = useState(false);
-//   const [gasPedalPressed, setGasPedalPressed] = useState(false);
-//   const [brakePedalPressed, setBrakePedalPressed] = useState(false);
-
-//   useEffect(() => {
-//     const gasPedalTimeout = setTimeout(() => {
-//       setGasPedalPressed(true);
-//       setTimeout(() => {
-//         setGasPedalPressed(false);
-//       }, 3000);
-//     }, 1000);
-
-//     const brakePedalTimeout = setTimeout(() => {
-//       setBrakePedalPressed(true);
-//       setTimeout(() => {
-//         setBrakePedalPressed(false);
-//       }, 3000);
-//     }, 2000);
-
-//     const interval = setInterval(() => {
-//       setSpeed((prevSpeed) => (prevSpeed >= 80 ? 0 : prevSpeed + 20));
-//       setWheelRotation((prevRotation) => (prevRotation >= 90 ? -90 : prevRotation + 45));
-//       setSeatbeltOn((prevSeatbeltOn) => !prevSeatbeltOn);
-//     }, 3000);
-
-//     return () => {
-//       clearInterval(interval);
-//       clearTimeout(gasPedalTimeout);
-//       clearTimeout(brakePedalTimeout);
-//     };
-//   }, []);
-
-//   return (
-//     <Box display="flex" flexDirection="column" alignItems="center">
-//       <Box position="relative">
-//         <Typography variant="h6" gutterBottom>
-//           Wheel
-//         </Typography>
-//         <Wheel style={{ transform: `rotate(${wheelRotation}deg)` }}>
-//           {speed > 0 ? <CircularProgress variant="determinate" value={speed / 80 * 100} size={120} /> : <Typography variant="body1">Stopped</Typography>}
-//         </Wheel>
-//         <GasPedal style={{ backgroundColor: gasPedalPressed ? 'green' : 'gray' }} />
-//         <BrakePedal style={{ backgroundColor: brakePedalPressed ? 'red' : 'gray' }} />
-//       </Box>
-//       <Speedometer>Speed: {speed} km/h</Speedometer>
-//       <SeatbeltIndicator>
-//         Seatbelt: {seatbeltOn ? 'On' : 'Off'}
-//       </SeatbeltIndicator>
-//     </Box>
-//   );
-// };
-
-// export default AccidentSimulation;
-
-// import React, { useState, useEffect } from 'react';
-// import { Box, Typography, CircularProgress, Paper } from '@mui/material';
-// import { styled } from '@mui/system';
-
-// const Wheel = styled(Box)({
-//   width: '150px',
-//   height: '150px',
-//   borderRadius: '50%',
-//   border: '5px solid black',
-//   display: 'flex',
-//   justifyContent: 'center',
-//   alignItems: 'center',
-//   boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
-//   position: 'relative',
-//   transition: 'transform 0.5s ease-in-out',
-// });
-
-// const Pedal = styled(Box)({
-//   width: '20px',
-//   height: '80px',
-//   backgroundColor: 'gray',
-//   position: 'absolute',
-//   bottom: '10px',
-// });
-
-// const GasPedal = styled(Pedal)({
-//   left: '30px',
-// });
-
-// const BrakePedal = styled(Pedal)({
-//   right: '30px',
-// });
-
-// const Seat = styled(Paper)(({ theme }) => ({
-//   width: '80px',
-//   height: '80px',
-//   backgroundColor: theme.palette.grey[200],
-//   display: 'flex',
-//   justifyContent: 'center',
-//   alignItems: 'center',
-//   margin: '5px',
-// }));
-
-// const EyeIndicator = styled('div', {
-//   shouldForwardProp: (prop) => prop !== 'open'
-// })<EyeIndicatorProps>(({ open, theme }) => ({
-  
-//   width: '10px',
-//   height: '10px',
-//   borderRadius: '50%',
-//   backgroundColor: open ? 'green' : 'red',
-//   border: `1px solid ${theme.palette.divider}`,
-// }));
-
-// const Speedometer = styled(Typography)({
-//   fontSize: '1.5em',
-//   marginTop: '1em',
-// });
-
-// const SeatbeltIndicator = styled(Typography)(({ theme }) => ({
-//   color: theme.palette.error.main,
-//   fontSize: '1.5em',
-//   marginTop: '1em',
-// }));
-
-// // Define a type that includes the custom properties you want to use
-// interface EyeIndicatorProps {
-//   open: boolean;  // Your custom property
+// interface Props {
+//   accidentId: string;
 // }
 
-// const AccidentSimulation: React.FC = () => {
+// const AccidentSimulation: React.FC<Props> = ({ accidentId }) => {
 //   const [speed, setSpeed] = useState(0);
 //   const [wheelRotation, setWheelRotation] = useState(0);
 //   const [seatbeltOn, setSeatbeltOn] = useState([false, false, false, false, false]);
@@ -275,154 +52,208 @@
 
 //   return (
 //     <Box display="flex" flexDirection="column" alignItems="center">
-//       {/* <Box position="relative">
-//         <Wheel style={{ transform: `rotate(${wheelRotation}deg)` }}>
-//           <Typography variant="caption">Wheel</Typography>
-//         </Wheel>
-//         <GasPedal style={{ backgroundColor: gasPedalPressed ? 'green' : 'gray' }} />
-//         <BrakePedal style={{ backgroundColor: brakePedalPressed ? 'red' : 'gray' }} />
-//       </Box> */}
-//  <Box position="relative">
-//   <Wheel style={{ transform: `rotate(${wheelRotation}deg)` }}>
-//     <Typography variant="caption">Wheel</Typography>
-//   </Wheel>
-//   {/* Positioning Brake Pedal on the left and further from the center */}
-//   <Box position="absolute" bottom="-90px" left="10%"> {/* Moved to left and adjusted the offset */}
-//     <BrakePedal style={{ backgroundColor: brakePedalPressed ? 'red' : 'gray' }}>
-//       <Typography variant="caption" textAlign="center">Brake</Typography>
-//     </BrakePedal>
-//   </Box>
-//   {/* Positioning Gas Pedal on the right and further from the center */}
-//   <Box position="absolute" bottom="-90px" right="10%"> {/* Moved to right and adjusted the offset */}
-//     <GasPedal style={{ backgroundColor: gasPedalPressed ? 'green' : 'gray' }}>
-//       <Typography variant="caption" textAlign="center">Gas</Typography>
-//     </GasPedal>
-//   </Box>
-// </Box>
-// <Box display="flex" flexDirection="column" alignItems="center" mt={10}> {/* Increased the top margin */}
-
+//       <Box position="relative" className="wheel" style={{ transform: `rotate(${wheelRotation}deg)` }}>
+//         <Typography variant="caption">Wheel</Typography>
+//       </Box>
+//       <Box position="absolute" bottom="-90px" left="10%" className="brake-pedal">
+//         <Typography variant="caption" textAlign="center" style={{ backgroundColor: brakePedalPressed ? 'red' : 'gray' }}>Brake</Typography>
+//       </Box>
+//       <Box position="absolute" bottom="-90px" right="10%" className="gas-pedal">
+//         <Typography variant="caption" textAlign="center" style={{ backgroundColor: gasPedalPressed ? 'green' : 'gray' }}>Gas</Typography>
+//       </Box>
 //        <Box display="flex" justifyContent="center" mt={2}>
 //     {seatbeltOn.slice(0, 2).map((belt, index) => (
-//     <Seat key={index} elevation={3} sx={{ margin: '0 50px' }}> {/* Adjusted margin here */}
-//     <Typography variant="caption">{belt ? 'Belted' : 'Unbelted'}</Typography>
-//       </Seat>
+//       <Paper key={index} className="seat">
+//         <Typography variant="caption">{belt ? 'Belted' : 'Unbelted'}</Typography>
+//       </Paper>
 //     ))}
 //   </Box>
+//   {/* Displaying the remaining three seats */}
 //   <Box display="flex" justifyContent="center" mt={2}>
 //     {seatbeltOn.slice(2).map((belt, index) => (
-//       <Seat key={index} elevation={3}>
+//       <Paper key={index + 2} className="seat"> {/* Ensure unique keys by adjusting the index */}
 //         <Typography variant="caption">{belt ? 'Belted' : 'Unbelted'}</Typography>
-//       </Seat>
+//       </Paper>
 //     ))}
 //   </Box>
-//       <Box display="flex" justifyContent="center" mt={2}>
-//         <EyeIndicator open={eyesOpen} />
-//         <Typography ml={1}>Driver's Eyes: {eyesOpen ? 'Open' : 'Closed'}</Typography>
-//       </Box>
-//       <Speedometer>Speed: {speed} km/h</Speedometer>
-//       <SeatbeltIndicator>
+//       <div className={`eye-indicator ${eyesOpen ? 'open' : 'closed'}`}></div>
+//       <Typography ml={1}>Driver's Eyes: {eyesOpen ? 'Open' : 'Closed'}</Typography>
+//       <Typography className="speedometer">Speed: {speed} km/h</Typography>
+//       <Typography className="seatbelt-indicator">
 //         Driver Seatbelt: {seatbeltOn[0] ? 'On' : 'Off'}
-//       </SeatbeltIndicator>
+//       </Typography>
 //     </Box>
-//     </Box>
-
 //   );
 // };
 
 // export default AccidentSimulation;
 
-import React, { useState, useEffect } from 'react';
-import { Box, Typography, Paper } from '@mui/material';
-import './AccidentSimulation.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Box, Typography, Paper } from "@mui/material";
+import "./AccidentSimulation.css";
+import SteeringWheel from "../Rescuer2/SteeringWheel";
 
-interface EyeIndicatorProps {
-  open: boolean;
+interface Props {
+  accidentId: string;
 }
 
-const AccidentSimulation: React.FC = () => {
-  const [speed, setSpeed] = useState(0);
-  const [wheelRotation, setWheelRotation] = useState(0);
-  const [seatbeltOn, setSeatbeltOn] = useState([false, false, false, false, false]);
-  const [gasPedalPressed, setGasPedalPressed] = useState(false);
+interface AccidentData {
+  timestamp: Date;
+  vin: string;
+  last_timestamp_check: Date;
+  acceleration: number;
+  speed: number;
+  license_plates: string[];
+  coordinates: number[];
+  violations: Array<{
+    type: string;
+    coordinates: number[];
+    timestamp: Date;
+  }>;
+  driver: {
+    seatbelt: boolean;
+    drowsiness: boolean;
+    heart_rate: number[];
+  };
+  passengers_num: number;
+  status: string;
+}
+
+interface VehicleState {
+  vin: string;
+  states: {
+    steering_wheel_angle: number;
+    brake_pedal: boolean;
+    acceleration_pedal: number;
+  }[];
+}
+
+const AccidentSimulation: React.FC<Props> = ({ accidentId }) => {
+  const [accidentData, setAccidentData] = useState<AccidentData | null>(null);
+  const [vehicleState, setVehicleState] = useState<VehicleState | null>(null);
+  const [speed, setSpeed] = useState<number>(0);
+  const [wheelRotation, setWheelRotation] = useState<number>(0);
+  const [seatbeltOn, setSeatbeltOn] = useState<boolean[]>([false, false, false, false, false]);
   const [brakePedalPressed, setBrakePedalPressed] = useState(false);
+  const [gasPedalPressed, setGasPedalPressed] = useState(false);
   const [eyesOpen, setEyesOpen] = useState(true);
 
+  let url =
+    process.env.REACT_APP_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
+
+  // if url is undefined, set it to REACT_APP_PROD_URL
+  if (!url) {
+    url = process.env.REACT_APP_PROD_URL;
+  }
+
   useEffect(() => {
-    const gasPedalTimeout = setTimeout(() => {
-      setGasPedalPressed(true);
-      setTimeout(() => {
-        setGasPedalPressed(false);
-      }, 3000);
-    }, 1000);
+    const fetchAccidentData = async () => {
+      try {
+        const response = await axios.get<AccidentData>(`${url}/accident/${accidentId}`);
+        setAccidentData(response.data);
+        fetchVehicleState(response.data.vin);
+      } catch (error) {
+        console.error("Error fetching accident data:", error);
+      }
+    };
 
-    const brakePedalTimeout = setTimeout(() => {
-      setBrakePedalPressed(true);
-      setTimeout(() => {
-        setBrakePedalPressed(false);
-      }, 3000);
-    }, 2000);
+    const fetchVehicleState = async (vin: string) => {
+      try {
+        const response = await axios.get<VehicleState>(`${url}/vehicle-state/${vin}`);
+        setVehicleState(response.data);
+      } catch (error) {
+        console.error("Error fetching vehicle state:", error);
+      }
+    };
 
-    const eyesTimeout = setTimeout(() => {
-      setEyesOpen(false);
-      setTimeout(() => {
-        setEyesOpen(true);
-      }, 500);
-    }, 5000);
+    fetchAccidentData();
+  }, [accidentId]);
 
+  // This useEffect simulates various vehicle behaviors
+  useEffect(() => {
     const interval = setInterval(() => {
-      setSpeed((prevSpeed) => (prevSpeed >= 100 ? 0 : prevSpeed + 20));
-      setWheelRotation((prevRotation) => (prevRotation >= 180 ? -180 : prevRotation + 90));
-      setSeatbeltOn(seatbeltOn.map(belt => !belt));
+      if (vehicleState) {
+        // Simulate dynamic updates to speed and wheel rotation based on vehicle state
+        setSpeed((prevSpeed) => (prevSpeed >= 100 ? 0 : prevSpeed + 20));
+        setWheelRotation((prevRotation) => (prevRotation >= 180 ? -180 : prevRotation + 90));
+        setSeatbeltOn(seatbeltOn.map((belt) => !belt));
+      }
     }, 3000);
 
     return () => {
       clearInterval(interval);
-      clearTimeout(gasPedalTimeout);
-      clearTimeout(brakePedalTimeout);
-      clearTimeout(eyesTimeout);
     };
-  }, [seatbeltOn]);
+  }, [vehicleState]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (vehicleState && vehicleState.states.length > 0) {
+        const latestState = vehicleState.states[vehicleState.states.length - 1];
+        setWheelRotation(latestState.steering_wheel_angle);
+        setBrakePedalPressed(latestState.brake_pedal);
+        setGasPedalPressed(latestState.acceleration_pedal > 0);
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [vehicleState]);
 
   return (
+    <>
     <Box display="flex" flexDirection="column" alignItems="center">
-      <Box position="relative" className="wheel" style={{ transform: `rotate(${wheelRotation}deg)` }}>
-        <Typography variant="caption">Wheel</Typography>
-      </Box>
-      <Box position="absolute" bottom="-90px" left="10%" className="brake-pedal">
-        <Typography variant="caption" textAlign="center" style={{ backgroundColor: brakePedalPressed ? 'red' : 'gray' }}>Brake</Typography>
-      </Box>
-      <Box position="absolute" bottom="-90px" right="10%" className="gas-pedal">
-        <Typography variant="caption" textAlign="center" style={{ backgroundColor: gasPedalPressed ? 'green' : 'gray' }}>Gas</Typography>
-      </Box>
-      {/* {seatbeltOn.map((belt, index) => (
-        <Paper key={index} className="seat">
-          <Typography variant="caption">{belt ? 'Belted' : 'Unbelted'}</Typography>
-        </Paper>
-      ))} */}
-       <Box display="flex" justifyContent="center" mt={2}>
-    {seatbeltOn.slice(0, 2).map((belt, index) => (
-      <Paper key={index} className="seat">
-        <Typography variant="caption">{belt ? 'Belted' : 'Unbelted'}</Typography>
-      </Paper>
-    ))}
-  </Box>
-  {/* Displaying the remaining three seats */}
-  <Box display="flex" justifyContent="center" mt={2}>
-    {seatbeltOn.slice(2).map((belt, index) => (
-      <Paper key={index + 2} className="seat"> {/* Ensure unique keys by adjusting the index */}
-        <Typography variant="caption">{belt ? 'Belted' : 'Unbelted'}</Typography>
-      </Paper>
-    ))}
-  </Box>
-      <div className={`eye-indicator ${eyesOpen ? 'open' : 'closed'}`}></div>
-      <Typography ml={1}>Driver's Eyes: {eyesOpen ? 'Open' : 'Closed'}</Typography>
-      <Typography className="speedometer">Speed: {speed} km/h</Typography>
-      <Typography className="seatbelt-indicator">
-        Driver Seatbelt: {seatbeltOn[0] ? 'On' : 'Off'}
-      </Typography>
+
+      {accidentData && vehicleState && (
+        <>
+            <SteeringWheel data={vehicleState} />
+
+          {/* <Paper className="wheel" style={{ transform: `rotate(${wheelRotation}deg)` }}>
+            <Typography variant="caption">Steering Wheel</Typography>
+          </Paper> */}
+          <Box className=" brake-pedal" style={{ backgroundColor: brakePedalPressed ? "red" : "gray" }}>
+            <Typography variant="caption">Brake Pedal</Typography>
+          </Box>
+          <Box className=" gas-pedal" style={{ backgroundColor: gasPedalPressed ? "green" : "gray" }}>
+            <Typography variant="caption">
+              Gas Pedal: {vehicleState.states[vehicleState.states.length - 1].acceleration_pedal}%
+            </Typography>
+          </Box>
+          <Box display="flex" flexDirection="column" alignItems="center" mt={2}>
+            {/* Top row with 2 seats */}
+            <Box display="flex" justifyContent="center">
+              {seatbeltOn.slice(0, 2).map((belt, index) => (
+                <Paper key={index} className="seat" style={{ backgroundColor: belt ? "blue" : "#bdbdbd" }}>
+                  <Typography variant="caption">{belt ? "Belted" : "Unbelted"}</Typography>
+                </Paper>
+              ))}
+            </Box>
+            {/* Bottom row with 3 seats */}
+            <Box display="flex" justifyContent="center" mt={1}>
+              {seatbeltOn.slice(2, 5).map((belt, index) => (
+                <Paper key={index + 2} className="seat" style={{ backgroundColor: belt ? "bdbdbd" : "#bdbdbd" }}>
+                  <Typography variant="caption">{belt ? "Unbelted" : "Unbelted"}</Typography>
+                </Paper>
+              ))}
+            </Box>
+          </Box>
+          <Typography className="speedometer">Speed: {speed} km/h</Typography>
+          <Typography className="seatbelt-indicator">
+            Driver Seatbelt: {accidentData.driver.seatbelt ? "On" : "Off"}
+          </Typography>
+          <div className={`eye-indicator ${eyesOpen ? "open" : "closed"}`}></div>
+          <Typography ml={1}>Driver's Eyes: {eyesOpen ? "Open" : "Closed"}</Typography>
+          {vehicleState.states.length > 0 && (
+            <Typography>
+              Steering Wheel Angle: {vehicleState.states[vehicleState.states.length - 1].steering_wheel_angle}
+            </Typography>
+          )}
+        </>
+      )}
     </Box>
+    </>
   );
 };
 
 export default AccidentSimulation;
-

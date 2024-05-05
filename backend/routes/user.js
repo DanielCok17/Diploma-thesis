@@ -131,4 +131,30 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+// get by role
+router.get('/role/:role', async (req, res) => {
+    let { role } = req.params;
+
+    if (role == 'Police') {
+        role = 'policeman';
+    }
+
+    //if Fire than change to firefighter
+    if (role == 'Fire') {
+        role = 'firefighter';
+    }
+
+    //if Ambulance than change to rescuer
+    if (role == 'Ambulance') {
+        role = 'rescuer';
+    }
+
+    try {
+        const users = await User.find({ role: role });
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
 module.exports = router;

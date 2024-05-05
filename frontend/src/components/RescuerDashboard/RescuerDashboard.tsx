@@ -2,6 +2,8 @@ import React from "react";
 import { Box, Grid, Paper, Typography, Button, List, ListItem, ListItemText, Divider, Chip } from "@mui/material";
 import LiveMap from "../LiveMap/LiveMap";
 import AccidentList from "../AccidentList/AccidentList";
+import AccidentBusyList from "../AccidentList/AccidentBusyList";
+
 import RescueUnitsStatus from "../RescueUnitsStatus/RescueUnitsStatus";
 
 const RescuerDashboard: React.FC = () => {
@@ -70,6 +72,7 @@ const RescuerDashboard: React.FC = () => {
             }}
           >
             <AccidentList accidents={dummyAccidents} />
+            <AccidentBusyList accidents={dummyAccidents} />
           </Box>
         </Box>
 

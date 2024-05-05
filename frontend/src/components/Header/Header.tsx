@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -18,6 +18,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./style.css";
 import { useAuth } from '../Login/AuthContext'; // Adjust the import path as necessary
+import Cookie from "js-cookie";
+import axios from "axios";
 
 const Header: React.FC = () => {
   const theme = useTheme();
@@ -25,6 +27,28 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const auth = useAuth(); // Use the auth context
+  const userId = Cookie.get("userId");
+  const [userData, setUserData] = useState<any>(null);
+
+  let url = process.env.REACT_APP_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
+  if (!url) {
+    url = process.env.REACT_APP_PROD_URL;
+  }
+
+  useEffect(() => {
+    if (userId) {
+      const fetchUserData = async () => {
+        try {
+          const { data } = await axios.get(`${url}/user/${userId}`);
+          setUserData(data);
+          console.log("User data:", data);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      };
+      fetchUserData();
+    }
+  }, [userId, url]);
 
   const handleLogout = () => {
     auth.logout(); // Assuming your auth context has a logout method

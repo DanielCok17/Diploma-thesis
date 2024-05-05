@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const AccidentReport = require('../models/Accident'); // Nastavte správnu cestu k súboru modelu
+const { assessAndDispatch } = require('../utils/accidentSeverity');
+const { assignAccidentToUser, endAccident } = require('../utils/assignAccident');
 
 router.post('/', async (req, res) => {
     const {
@@ -85,6 +87,16 @@ router.get('/pending', async (req, res) => {
     }
 });
 
+// all accidents with status assigned
+router.get('/assigned', async (req, res) => {
+    try {
+        const accidents = await AccidentReport.find({ status: 'assigned' });
+        res.status(200).json(accidents);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
 // update accident status
 router.put('/:id', async (req, res) => {
     const { id } = req.params;
@@ -118,6 +130,80 @@ router.get('/:id', async (req, res) => {
     }
 }
 );
+
+// update rescuerIds for accident
+router.put('/:id/rescuers', async (req, res) => {
+    const { id } = req.params;
+    const { rescuerIds } = req.body;
+
+    try {
+        const updatedAccident = await AccidentReport.findByIdAndUpdate(id, { rescuerIds }, { new: true });
+        if (!updatedAccident) {
+            return res.status(404).send('Accident not found');
+        }
+
+        res.status(200).json(updatedAccident);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+);
+
+// test for severity
+router.get('/test/testSeverity', async (req, res) => {
+    // just call the function
+    const accidentId = '6634f0485a3b998225d69910';
+    await assessAndDispatch(accidentId);
+
+    res.status(200).send('Test successful');
+});
+
+// test for assigning accident
+router.get('/test/assignAccidentToUser', async (req, res) => {
+    // just call the function
+    await assignAccidentToUser('6634f0485a3b998225d69910');
+
+    res.status(200).send('Test successful');
+});
+
+// test for ending accident
+router.get('/test/endAccident', async (req, res) => {
+    // just call the function
+    await endAccident('6634f0485a3b998225d69910');
+
+    res.status(200).send('Test successful');
+});
+
+// accident details - all users and rescue units assigned to the accident
+router.get('/details/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const accident = await AccidentReport.findById(id).populate('assignedUsers').populate('rescuerIds');
+        if (!accident) {
+            return res.status(404).send('Accident not found');
+        }
+        res.status(200).json(accident);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+);
+
+// accidet/user/:id - get all accidents assigned to the user
+router.get('/user/:userId', async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        const accidents = await AccidentReport.findOne({ assignedUsers: userId });
+        res.status(200).json(accidents);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+);
+
+
 
 module.exports = router;
 

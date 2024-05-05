@@ -2,7 +2,7 @@
 .wheel {
   width: 150px;
   height: 150px;
-  border-radius: 50%;
+  border-radius: 50%; /* Ensures the wheel is perfectly circular */
   border: 5px solid black;
   display: flex;
   justify-content: center;
@@ -12,20 +12,29 @@
   transition: transform 0.5s ease-in-out;
 }
 
+
 .pedal {
-  width: 20px;
-  height: 80px;
-  background-color: gray;
+  width: 30px; /* Wider for better visibility */
+  height: 100px; /* Taller for more accurate simulation */
   position: absolute;
-  bottom: 10px;
+  bottom: -120px; /* Position lower than previously */
 }
 
 .gas-pedal {
-  left: 30px;
+  transform: translateX(50%); /* Ensures it's perfectly aligned to the right */
+  bottom: -170px; /* Position lower than previously */
+  width: 30px; /* Wider for better visibility */
+  height: 100px; /* Taller for more accurate simulation */
+  position: absolute;
 }
 
 .brake-pedal {
-  right: 30px;
+  transform: translateX(-50%); /* Ensures it's perfectly aligned to the left */
+  bottom: -170px; /* Position lower than previously */
+  width: 30px; /* Wider for better visibility */
+  height: 100px; /* Taller for more accurate simulation */
+  position: absolute;
+
 }
 
 .seat {

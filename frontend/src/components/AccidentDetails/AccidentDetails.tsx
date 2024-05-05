@@ -45,6 +45,7 @@ interface Accident {
 
 const AccidentDetails: React.FC = () => {
   const [accident, setAccident] = useState<Accident | null>(null);
+  const [accidentId, setAccidentId] = useState<string>("");
 
   // Fetch accident details from the server
   useEffect(() => {
@@ -52,6 +53,7 @@ const AccidentDetails: React.FC = () => {
       // get accident id from the URL
       const urlPath = window.location.hash; // Gets the hash part of the URL which includes '#'
       const accidentId = urlPath.split("/accident-details/")[1];
+      setAccidentId(accidentId);
       try {
         const response = await axios.get(`${url}/accident/${accidentId}`);
         setAccident(response.data);
@@ -166,7 +168,7 @@ const AccidentDetails: React.FC = () => {
           <Typography variant="h4" gutterBottom>
             Accident Simulation
           </Typography>
-          <AccidentSimulation />
+          <AccidentSimulation accidentId={accidentId}/>
         </Box>
         <Box
           sx={{
@@ -174,7 +176,7 @@ const AccidentDetails: React.FC = () => {
             mt: { xs: 2, md: 0 }, // Top margin on small screens only
           }}
         >
-          <RescueMissionDetails />
+          <RescueMissionDetails accidentId={accidentId}/>
         </Box>
       </Box>
     </>

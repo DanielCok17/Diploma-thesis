@@ -1,24 +1,25 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
-import { Button, TextField, Container, Typography, Box, Snackbar, IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
+import { Button, TextField, Container, Typography, Box, Snackbar, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const Login: React.FC = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const auth = useAuth();
 
-  let url = process.env.REACT_APP_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
-  console.log('URL:', url);
-  console.log('REACT_APP_ENVIRONMENT:', process.env.REACT_APP_ENVIRONMENT);
-  console.log('REACT_APP_PROD_URL:', process.env.REACT_APP_PROD_URL);
+  let url =
+    process.env.REACT_APP_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
+  console.log("URL:", url);
+  console.log("REACT_APP_ENVIRONMENT:", process.env.REACT_APP_ENVIRONMENT);
+  console.log("REACT_APP_PROD_URL:", process.env.REACT_APP_PROD_URL);
 
   // if url is undefined, set it to REACT_APP_PROD_URL
   if (!url) {
@@ -32,44 +33,49 @@ const Login: React.FC = () => {
     try {
       const response = await axios.post(`${url}/user/login`, {
         username,
-        password
+        password,
       });
 
       const { role, token, userId } = response.data;
-      Cookies.set('token', token, { expires: 7 });
+      Cookies.set("token", token, { expires: 7 });
       auth.login(role, userId);
       setLoading(false);
-      
+
       switch (role) {
-        case 'admin':
-          navigate('/admin');
+        case "admin":
+          navigate("/admin");
           break;
-        case 'user':
-          navigate('/user');
+        case "user":
+          navigate("/user");
           break;
-        case 'superadmin':
-          navigate('/new-rescue-center');
+        case "superadmin":
+          navigate("/new-rescue-center");
           break;
-        case 'rescuer':
-          navigate('/rescuer2');
+        case "rescuer":
+          navigate("/rescuer2");
           break;
-          // add dispatcher
-        case 'dispatcher':
-          navigate('/user');
+        case "policeman":
+          navigate("/rescuer2");
+          break;
+        case "firefighter":
+          navigate("/rescuer2");
+          break;
+        case "dispatcher":
+          navigate("/user");
           break;
         default:
-          navigate('/');
+          navigate("/");
       }
     } catch (error: any) {
       setLoading(false);
-      setMessage('Invalid credentials or network error');
+      setMessage("Invalid credentials or network error");
       setOpen(true);
-      console.error('Login error:', error.response?.data?.message || error.message);
+      console.error("Login error:", error.response?.data?.message || error.message);
     }
   };
 
   const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setOpen(false);
@@ -83,56 +89,58 @@ const Login: React.FC = () => {
     </React.Fragment>
   );
 
+  const handleNavigateToRegister = () => {
+    navigate("/register");
+  };
+
   return (
-    <Container component="main" maxWidth="xs">
-      <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Typography component="h1" variant="h5">Sign in</Typography>
-        <Box component="form" noValidate sx={{ mt: 1 }} onSubmit={handleLogin}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Username"
-            name="username"
-            autoComplete="username"
-            autoFocus
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            disabled={loading}
-          >
-            Sign In
-          </Button>
+    <>
+      <Container component="main" maxWidth="xs">
+        <Box sx={{ marginTop: 8, display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Box component="form" noValidate sx={{ mt: 1 }} onSubmit={handleLogin}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="username"
+              label="Username"
+              name="username"
+              autoComplete="username"
+              autoFocus
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} disabled={loading}>
+              Sign In
+            </Button>
+            <Typography sx={{ mt: 2, textAlign: "center" }}>
+              Don't have an account?{" "}
+              <Button onClick={handleNavigateToRegister} color="primary">
+                Register now
+              </Button>
+            </Typography>
+          </Box>
         </Box>
-      </Box>
-      <Snackbar
-        open={open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        message={message}
-        action={action}
-      />
-    </Container>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose} message={message} action={action} />
+      </Container>
+    </>
   );
 };
 

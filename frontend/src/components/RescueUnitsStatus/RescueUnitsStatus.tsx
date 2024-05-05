@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Card,
   CardContent,
@@ -10,29 +10,31 @@ import {
   ListItemText,
   ListItemAvatar,
   Avatar,
-  Chip
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { green, red, yellow } from '@material-ui/core/colors';
+  Chip,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { green, red, yellow } from "@material-ui/core/colors";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 // Define types
-type UnitStatus = 'Available' | 'Busy' | 'On the way';
+type UnitStatus = "Available" | "Busy" | "On the way";
 
 interface RescueUnit {
   type: string;
   status: UnitStatus;
   count: number;
   username: string;
-  incidentId?: string;
+  accidentId?: string;
 }
 
 // Use makeStyles hook to create classes
 const useStyles = makeStyles({
   card: {
-    margin: '1rem',
+    margin: "1rem",
   },
   avatar: {
-    color: '#fff',
+    color: "#fff",
   },
   chipReady: {
     color: green[600],
@@ -51,41 +53,47 @@ const useStyles = makeStyles({
 const RescueUnitsStatus: React.FC = () => {
   const classes = useStyles();
   const [units, setUnits] = useState<RescueUnit[]>([]);
-  let url = process.env.REACT_APP_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
+  const navigate = useNavigate();
+  let url =
+    process.env.REACT_APP_ENVIRONMENT === "prod" ? process.env.REACT_APP_PROD_URL : process.env.REACT_APP_DEV_URL;
 
   if (!url) {
     url = process.env.REACT_APP_PROD_URL;
   }
-  
+
   useEffect(() => {
     const fetchUnits = async () => {
       try {
         const response = await axios.get<RescueUnit[]>(`${url}/rescue-unit`);
         setUnits(response.data);
       } catch (error) {
-        console.error('Failed to fetch units:', error);
+        console.error("Failed to fetch units:", error);
       }
     };
 
     fetchUnits();
   }, []);
 
-  const getStatusChip = (status: UnitStatus, incidentId?: string) => {
+  const getStatusChip = (status: UnitStatus, accidentId?: string) => {
     let label = status;
-    let className = '';
+    let className = "";
     switch (status) {
-      case 'Available':
+      case "Available":
         className = classes.chipReady;
         break;
-      case 'Busy':
+      case "Busy":
         className = classes.chipBusy;
-        label += incidentId ? ` (Incident ID: ${incidentId})` : '';
+        label += accidentId ? ` (Incident ID: ${accidentId})` : "";
         break;
-      case 'On the way':
+      case "On the way":
         className = classes.chipUnavailable;
         break;
     }
     return <Chip label={label} className={className} size="small" />;
+  };
+
+  const navigateToIncident = (accidentId: string) => {
+    navigate("/accident-details/" + accidentId);
   };
 
   return (
@@ -99,14 +107,22 @@ const RescueUnitsStatus: React.FC = () => {
           {units.map((unit, index) => (
             <ListItem key={index}>
               <ListItemAvatar>
-                <Avatar className={classes.avatar}>
-                  {/* You can use icons for different types of units here */}
-                </Avatar>
+                <Avatar className={classes.avatar}>{/* You can use icons for different types of units here */}</Avatar>
               </ListItemAvatar>
               <ListItemText
                 primary={`${unit.type} - ${unit.username}`}
-                secondary={getStatusChip(unit.status, unit.incidentId)}
+                secondary={getStatusChip(unit.status, unit.accidentId)}
               />
+              {unit.accidentId && ( // Check if accidentId is not null
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  onClick={() => navigateToIncident(unit.accidentId ? unit.accidentId : "")} // Call the bound function
+                >
+                  Show Details
+                </Button>
+              )}
             </ListItem>
           ))}
         </List>

@@ -234,6 +234,8 @@ const HeartRateChart2: React.FC = () => {
     url = "wss://diploma-thesis-backend.onrender.com"; // Fallback URL if none is defined
   }
 
+  console.log("WebSocket URL:", url);
+
   const [messages, setMessages] = useState<string[]>([]);
   const [chartData, setChartData] = useState<ChartData>(initialData);
   const { sendJsonMessage, lastMessage } = useWebSocket(url, {
@@ -299,7 +301,7 @@ const HeartRateChart2: React.FC = () => {
   }, [lastMessage]);
 
   return (
-    <div style={{ width: "100%", height: "400px" }}>
+    <div style={{ width: '50%', height: '350px' }}>
       <Line data={chartData} options={options} />
     </div>
   );
