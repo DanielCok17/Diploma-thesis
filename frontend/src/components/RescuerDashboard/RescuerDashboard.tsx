@@ -76,9 +76,9 @@ const RescuerDashboard: React.FC = () => {
   return (
     <>
       <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-        <Button variant="contained" color="primary" sx={{ m: 2 }} onClick={() => simulateNewAccident()}>
-          Simulate New Accident
-        </Button>
+      {/* <Button variant="contained" color="primary" sx={{ m: 2 }} onClick={() => simulateNewAccident()}> */}
+          {/* Simulate New Accident */}
+        {/* </Button> */}
         <Box
           sx={{
             display: "flex",

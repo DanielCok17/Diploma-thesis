@@ -1,5 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Paper, Grid, Typography, Box } from "@mui/material";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Button,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import SpeedIcon from "@mui/icons-material/Speed";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
@@ -46,6 +58,10 @@ interface Accident {
 const AccidentDetails: React.FC = () => {
   const [accident, setAccident] = useState<Accident | null>(null);
   const [accidentId, setAccidentId] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [note, setNote] = useState("");
+  const [passengerNotes, setPassengerNotes] = useState("");
+  const [severity, setSeverity] = useState("moderate");
 
   // Fetch accident details from the server
   useEffect(() => {
@@ -65,24 +81,23 @@ const AccidentDetails: React.FC = () => {
     fetchAccidentDetails();
   }, []);
 
-  // Function to render violations
-  // const renderViolations = (violations: typeof accident.violations) => {
-  //   return (
-  //     <Box>
-  //       {violations.map((violation, index) => (
-  //         <Typography key={index} variant="body2">
-  //           {`${violation.type} at ${new Date(violation.timestamp).toLocaleTimeString()} (${violation.coordinates.join(
-  //             ", "
-  //           )})`}
-  //         </Typography>
-  //       ))}
-  //     </Box>
-  //   );
-  // };
-
   if (!accident) {
     return <p>Loading accident details...</p>; // or some loading spinner
   }
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSubmit = () => {
+    // Implement update logic here
+    console.log({ note, passengerNotes, severity });
+    handleClose(); // Close dialog after submit
+  };
 
   return (
     <>
@@ -90,6 +105,54 @@ const AccidentDetails: React.FC = () => {
         <Typography variant="h5" component="h3" gutterBottom>
           Accident Details
         </Typography>
+        <Button variant="contained" color="primary" onClick={handleClickOpen}>
+          Close Accident
+        </Button>
+
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Close Accident</DialogTitle>
+          <DialogContent>
+            <FormControl fullWidth>
+              <InputLabel id="severity-label">Severity</InputLabel>
+              <Select
+                labelId="severity-label"
+                value={severity}
+                label="Severity"
+                onChange={(e) => setSeverity(e.target.value)}
+              >
+                <MenuItem value="simple">Simple</MenuItem>
+                <MenuItem value="moderate">Moderate</MenuItem>
+                <MenuItem value="critical">Critical</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="note"
+              label="Note"
+              type="text"
+              fullWidth
+              variant="standard"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+            />
+            <TextField
+              margin="dense"
+              id="passengerNotes"
+              label="Passenger Notes"
+              type="text"
+              fullWidth
+              variant="standard"
+              value={passengerNotes}
+              onChange={(e) => setPassengerNotes(e.target.value)}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleSubmit}>Submit</Button>
+          </DialogActions>
+        </Dialog>
+
         <Grid container spacing={2}>
           <Grid item xs={6} md={3}>
             <DriveEtaIcon />
@@ -168,7 +231,7 @@ const AccidentDetails: React.FC = () => {
           <Typography variant="h4" gutterBottom>
             Accident Simulation
           </Typography>
-          <AccidentSimulation accidentId={accidentId}/>
+          <AccidentSimulation accidentId={accidentId} />
         </Box>
         <Box
           sx={{
@@ -176,7 +239,7 @@ const AccidentDetails: React.FC = () => {
             mt: { xs: 2, md: 0 }, // Top margin on small screens only
           }}
         >
-          <RescueMissionDetails accidentId={accidentId}/>
+          <RescueMissionDetails accidentId={accidentId} />
         </Box>
       </Box>
     </>
